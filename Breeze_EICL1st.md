@@ -98,7 +98,7 @@ Weak: d t th
 something， t会省略，
 这一章节听得有点离谱了，完全不对，cann't 没听出来；
 
-### 2024.7.2
+### 2024.7.20
 
 dictation5:
 origin: I have come here to choose pop gun and kickcase, and all other company;
@@ -116,7 +116,7 @@ repeat: the secrect of life is just to live every moment;
 注意: secrect of  t和o连读
 
 
-### 2024.7.3
+### 2024.7.03
 
 dictation7 
 

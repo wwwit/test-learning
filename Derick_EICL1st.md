@@ -98,7 +98,7 @@
 - I discussed automating some processes for our collaborative learning project with Muxin. My next task is to develop a script that will help reduce conflicts when others submit their assignments. This will be my first contribution to LXDAO, and I'm excited to be involved in such a project.
 
 ### 2024.07.04
-- 当我在阿里山可见度反垃圾士大夫看见拉山口觉得
+- 当
 ### 2024.07.05
 
 <!-- EICL1st_END -->
