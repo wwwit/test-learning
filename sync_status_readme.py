@@ -1,3 +1,4 @@
+import os
 import re
 from datetime import datetime, timedelta
 import pytz
@@ -78,6 +79,9 @@ def check_weekly_status(user_status, date):
         logging.error(f"Error in check_weekly_status: {str(e)}")
         return "⭕️"
 
+def get_all_user_files():
+    return [f.split('_')[0] for f in os.listdir('.') if f.endswith('_EICL1st.md')]
+
 def update_readme(content, start_marker, end_marker):
     try:
         start_index = content.find(start_marker)
@@ -95,10 +99,12 @@ def update_readme(content, start_marker, end_marker):
             '| ------------- | ' + ' | '.join(['----' for _ in date_range]) + ' |\n'
         ]
 
+        existing_users = set()
         for row in table_rows:
             match = re.match(r'\|\s*([^|]+)\s*\|', row)
             if match:
                 display_name = match.group(1).strip()
+                existing_users.add(display_name)
                 user_status = get_user_study_status(display_name)
                 new_row = f"| {display_name} |"
                 for date in date_range:
@@ -108,6 +114,14 @@ def update_readme(content, start_marker, end_marker):
             else:
                 logging.warning(f"Skipping invalid row: {row}")
                 new_table.append(row + '\n')
+
+        # 添加新用户
+        all_users = set(get_all_user_files())
+        new_users = all_users - existing_users
+        for user in new_users:
+            new_row = f"| {user} |" + " | ".join([" " for _ in date_range]) + " |\n"
+            new_table.append(new_row)
+            logging.info(f"Added new user: {user}")
 
         new_table.append(f'{end_marker}\n')
 
