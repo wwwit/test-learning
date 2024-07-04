@@ -20,6 +20,7 @@
 [Maybe 1%]
 
 ## Notes
+<!-- EICL1st_START -->
 ### 2024.6.24
 xxx
 
@@ -28,7 +29,7 @@ xxx
 
 ### 2024.6.26
 xxx
-
+<!-- EICL1st_END -->
 
 听写笔记的方法和演示，以 https://www.bilibili.com/video/BV1U7411a7xG 为例，仅参考：
 
