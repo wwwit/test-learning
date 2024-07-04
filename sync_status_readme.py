@@ -97,10 +97,12 @@ if start_index != -1 and end_index != -1:
     logging.info(f"成功提取表格内容。行数: {len(table_rows)}")
 
     # 解析现有表格并更新学习状态
-    new_table = [
-        '| EICL1st· Name | ' + ' | '.join(date.strftime("%-m.%-d") for date in date_range) + ' |\n',
-        '| ------------- | ' + ' | '.join(['----' for _ in date_range]) + ' |\n'
-    ]
+    # new_table = [
+    #     '| EICL1st· Name | ' + ' | '.join(date.strftime("%-m.%-d") for date in date_range) + ' |\n',
+    #     '| ------------- | ' + ' | '.join(['----' for _ in date_range]) + ' |\n'
+    # ]
+    new_table = ['| EICL1st· Name | ' + ' | '.join(date_range) + ' |\n',
+             '| ------------- | ' + ' | '.join(['----' for _ in date_range]) + ' |\n']
 
     for row in table_rows:
         match = re.match(r'\|\s*\[([^\]]+)\]', row)
