@@ -1,5 +1,11 @@
 # I'm lily, i want inva
 <!-- EICL1st_START -->
+### 2024.06.24
+- 新的一天o not know what will happen in the future是新的开始，我们都有美好的未来
+### 2024.06.25
+- 新的一天o not know what will happen in the future是新的开始，我们都有美好的未来
+### 2024.06.26
+- 新的一天o not know what will happen in the future是新的开始，我们都有美好的未来
 
 ### 2024.06.27
 - 新的一天o not know what will happen in the future是新的开始，我们都有美好的未来
