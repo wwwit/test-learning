@@ -33,9 +33,11 @@ current_date = datetime.now(beijing_tz)
 #         content = match.group(1).strip()
 #         return len(content) > 10
 #     return False
+
 def check_md_content(file_content, date):
-    date_pattern = r'###\s*' + date.strftime("%Y.%m.%d")
-    next_date_pattern = r'###\s*\d{4}\.\d{2}\.\d{2}'
+    # 构建可以匹配两种日期格式的正则表达式 ### 2024.7.1 和2024.07.01
+    date_pattern = r'###\s*' + date.strftime("%Y.%-m.%-d").replace('.0', '.') + r'|' + date.strftime("%Y.%m.%d")
+    next_date_pattern = r'###\s*\d{4}\.(?:0?[1-9]|1[0-2])\.(?:0?[1-9]|[12][0-9]|3[01])'
     
     # 查找当前日期的位置
     current_date_match = re.search(date_pattern, file_content)
@@ -57,7 +59,6 @@ def check_md_content(file_content, date):
     content = re.sub(r'\s', '', content)
     
     return len(content) > 10
-
 
 def get_user_study_status(nickname):
     user_status = {}
