@@ -12,8 +12,8 @@ end_date = datetime(2024, 7, 14, tzinfo=beijing_tz)
 date_range = [(start_date + timedelta(days=x)) for x in range((end_date - start_date).days + 1)]
 
 # 获取当前北京时间
-current_date = datetime.now(beijing_tz)
-
+# current_date = datetime.now(beijing_tz)
+current_date = datetime.now(beijing_tz).date()
 # def check_md_content(file_content, date):
 #     # 提取 <!-- EICL1st_START --> 和 <!-- EICL1st_END --> 之间的内容
 #     start_tag = "<!-- EICL1st_START -->"
