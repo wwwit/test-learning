@@ -113,14 +113,17 @@ def update_readme(content, start_marker, end_marker):
                 new_table.append(new_row + '\n')
             else:
                 logging.warning(f"Skipping invalid row: {row}")
-                new_table.append(row + '\n')
 
         # 添加新用户
         all_users = set(get_all_user_files())
         new_users = all_users - existing_users
         for user in new_users:
-            new_row = f"| {user} |" + " | ".join([" " for _ in date_range]) + " |\n"
-            new_table.append(new_row)
+            user_status = get_user_study_status(user)
+            new_row = f"| {user} |"
+            for date in date_range:
+                status = check_weekly_status(user_status, date)
+                new_row += f" {status} |"
+            new_table.append(new_row + '\n')
             logging.info(f"Added new user: {user}")
 
         new_table.append(f'{end_marker}\n')
