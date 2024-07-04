@@ -19,7 +19,7 @@
 ## Do you think you will finish the whole CoLearning program?
 [Yes 100% or Maybe 100%]
 
-### 2024.7.02
+### 2024.07.02
 What i heared
 15. The frantic pacing scence change every 11 seconds on average often leaves kids XXX end XXX only leave them unable to the concentrate(30%)
 
@@ -42,7 +42,7 @@ learning
 
 17. Useless - 一无是处， paot - 婴儿，prime - 全盛时期 I still in my prime - 我正风华正茂
 
-## 2024.7.01
+## 2024.07.01
 ### Daily Dication Number 14
 
 The cats Rexxx mine lines ,and he clean XXXX one of them, Here in New York City
@@ -57,7 +57,7 @@ reputedly - 据说
 
 只听写了一个课程，明天需要听 3 个课程补上
 
-## 2024.6.30
+### 2024.06.30
 ### Daily Dication Number 12
 Jim handsomme created more muppets For mysteris，his waring grew those in mississippi
 
