@@ -12,30 +12,10 @@ end_date = datetime(2024, 7, 14, tzinfo=beijing_tz)
 date_range = [(start_date + timedelta(days=x)) for x in range((end_date - start_date).days + 1)]
 
 # 获取当前北京时间
-# current_date = datetime.now(beijing_tz)
 current_date = datetime.now(beijing_tz).date()
-# def check_md_content(file_content, date):
-#     # 提取 <!-- EICL1st_START --> 和 <!-- EICL1st_END --> 之间的内容
-#     start_tag = "<!-- EICL1st_START -->"
-#     end_tag = "<!-- EICL1st_END -->"
-#     start_index = file_content.find(start_tag)
-#     end_index = file_content.find(end_tag)
-    
-#     if start_index != -1 and end_index != -1:
-#         content = file_content[start_index + len(start_tag):end_index].strip()
-#     else:
-#         content = file_content  # 如果没有找到标签，使用整个文件内容
-
-#     date_pattern = r'###\s*' + date.strftime("%Y.%m.%d")
-#     content_pattern = date_pattern + r'([\s\S]*?)(?=###|\Z)'
-#     match = re.search(content_pattern, content)
-#     if match:
-#         content = match.group(1).strip()
-#         return len(content) > 10
-#     return False
 
 def check_md_content(file_content, date):
-    # 构建可以匹配两种日期格式的正则表达式 ### 2024.7.1 和2024.07.01
+    # 构建可以匹配两种日期格式的正则表达式
     date_pattern = r'###\s*' + date.strftime("%Y.%-m.%-d").replace('.0', '.') + r'|' + date.strftime("%Y.%m.%d")
     next_date_pattern = r'###\s*\d{4}\.(?:0?[1-9]|1[0-2])\.(?:0?[1-9]|[12][0-9]|3[01])'
     
@@ -60,23 +40,6 @@ def check_md_content(file_content, date):
     
     return len(content) > 10
 
-# def get_user_study_status(nickname):
-#     user_status = {}
-#     file_name = f"{nickname}_EICL1st.md"
-#     try:
-#         with open(file_name, 'r', encoding='utf-8') as file:
-#             file_content = file.read()
-#             for date in date_range:
-#                 if date > current_date:
-#                     user_status[date] = " "  # 未来的日期显示为空白
-#                 else:
-#                     user_status[date] = "✅" if check_md_content(file_content, date) else "⭕️"
-#     except FileNotFoundError:
-#         print(f"Error: Could not find file {file_name}")
-#         for date in date_range:
-#             user_status[date] = "⭕️"
-#     return user_status
-
 def get_user_study_status(nickname):
     user_status = {}
     file_name = f"{nickname}_EICL1st.md"
@@ -84,9 +47,9 @@ def get_user_study_status(nickname):
         with open(file_name, 'r', encoding='utf-8') as file:
             file_content = file.read()
             for date in date_range:
-                if date > current_date.date():
+                if date.date() > current_date:
                     user_status[date] = " "  # 未来的日期显示为空白
-                elif date == current_date.date():
+                elif date.date() == current_date:
                     user_status[date] = "✅" if check_md_content(file_content, date) else " "  # 当天有内容标记✅,否则空白
                 else:
                     user_status[date] = "✅" if check_md_content(file_content, date) else "⭕️"
@@ -96,12 +59,11 @@ def get_user_study_status(nickname):
             user_status[date] = "⭕️"
     return user_status
 
-
 def check_weekly_status(user_status, date):
-    week_start = date - timedelta(days=date.weekday())
+    week_start = date.date() - timedelta(days=date.weekday())
     week_dates = [week_start + timedelta(days=x) for x in range(7)]
-    week_dates = [d for d in week_dates if d in date_range and d <= date]
-    missing_days = sum(1 for d in week_dates if user_status.get(d, "⭕️") == "⭕️")
+    week_dates = [d for d in week_dates if d in [date.date() for date in date_range] and d <= date.date()]
+    missing_days = sum(1 for d in week_dates if user_status.get(datetime.combine(d, datetime.min.time(), tzinfo=beijing_tz), "⭕️") == "⭕️")
     return "❌" if missing_days > 2 else user_status.get(date, "⭕️")
 
 # 读取README.md文件
