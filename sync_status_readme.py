@@ -40,7 +40,6 @@ def get_user_study_status(nickname):
             else:
                 user_status[date] = "✅" if check_md_content(file_content, date) else "⭕️"
     except:
-        print(f"Error: Could not find or read file {file_name}")
         for date in date_range:
             user_status[date] = "⭕️"
     return user_status
@@ -73,11 +72,13 @@ if start_index != -1 and end_index != -1:
                  '| ------------- | ' + ' | '.join(['----' for _ in date_range]) + ' |\n']
     
     for row in table_rows:
-        match = re.match(r'\|\s*\[([^\]]+)\]', row)
+        match = re.match(r'\|\s*\[([^\]]+)\]\(([^)]+)\)\s*\|', row)
         if match:
             display_name = match.group(1)
+            github_url = match.group(2)
+            
             user_status = get_user_study_status(display_name)
-            new_row = f"| [{display_name}]" + row[row.index(']'):row.index('|', 1)] + "|"
+            new_row = f"| [{display_name}]({github_url}) |"
             for date in date_range:
                 status = check_weekly_status(user_status, date)
                 new_row += f" {status} |"
