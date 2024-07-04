@@ -1,0 +1,113 @@
+name: Repo Management
+
+on:
+  pull_request_target:
+    types: [closed]
+  schedule:
+    - cron: '0 0 * * *'  # 每天午夜运行
+  push:
+    branches: [ main ]  # 每次推送到main分支时也运行
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  invite-collaborator:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request_target' && github.event.pull_request.merged == true
+    steps:
+      - name: Check if user is already a collaborator
+        id: check-collaborator
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const { owner, repo } = context.repo;
+            const username = context.payload.pull_request.user.login;
+            try {
+              await github.rest.repos.getCollaboratorPermissionLevel({
+                owner,
+                repo,
+                username,
+              });
+              core.setOutput('is_collaborator', 'true');
+            } catch (error) {
+              if (error.status === 404) {
+                core.setOutput('is_collaborator', 'false');
+              } else {
+                throw error;
+              }
+            }
+
+      - name: Invite collaborator
+        if: steps.check-collaborator.outputs.is_collaborator == 'false'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const { owner, repo } = context.repo;
+            const username = context.payload.pull_request.user.login;
+            try {
+              const response = await github.rest.repos.addCollaborator({
+                owner,
+                repo,
+                username,
+                permission: 'write'
+              });
+              if (response.status === 201) {
+                console.log(`Invitation sent to ${username} as a collaborator with write permission.`);
+                core.setOutput('invitation_sent', 'true');
+              } else if (response.status === 204) {
+                console.log(`${username} is already a collaborator.`);
+                core.setOutput('invitation_sent', 'false');
+              }
+            } catch (error) {
+              core.setFailed(`Error inviting collaborator: ${error.message}`);
+            }
+
+      - name: Comment on PR
+        if: steps.check-collaborator.outputs.is_collaborator == 'false' && steps.invite-collaborator.outputs.invitation_sent == 'true'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const { owner, repo } = context.repo;
+            const issue_number = context.payload.pull_request.number;
+            const username = context.payload.pull_request.user.login;
+            await github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number,
+              body: `Thanks for your contribution, @${username}! You've been invited as a collaborator with write permissions. Please check your email for the invitation.`
+            });
+
+  update-readme:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || github.event_name == 'push'
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install PyGithub pytz
+    - name: Update README
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: python sync_status_readme.py
+    - name: Check for changes
+      id: git-check
+      run: |
+        git diff --exit-code README.md || echo "::set-output name=modified::true"
+    - name: Commit changes
+      if: steps.git-check.outputs.modified == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add README.md
+        git commit -m "Update commit status table"
+        git push
