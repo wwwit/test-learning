@@ -28,7 +28,6 @@ def check_md_content(file_content, date):
         return len(content) > 10
     return False
 
-# 获取每个用户在每一天的学习状态
 def get_user_study_status(nickname):
     user_status = {}
     file_name = f"{nickname}_EICL1st.md"
@@ -45,7 +44,6 @@ def get_user_study_status(nickname):
             user_status[date] = "⭕️"
     return user_status
 
-# 检查是否有人在一周内超过两天没有提交
 def check_weekly_status(user_status, date):
     week_start = datetime.strptime(date, "%m.%d").replace(year=2024, tzinfo=beijing_tz)
     week_start -= timedelta(days=week_start.weekday())  # 调整到本周一
