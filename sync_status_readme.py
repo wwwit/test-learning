@@ -59,23 +59,6 @@ def check_md_content(file_content, date):
     return len(content) > 10
 
 
-# def get_user_study_status(nickname):
-#     user_status = {}
-#     file_name = f"{nickname}_EICL1st.md"
-#     try:
-#         with open(file_name, 'r', encoding='utf-8') as file:
-#             file_content = file.read()
-#             for date in date_range:
-#                 if date > current_date:
-#                     user_status[date] = " "  # 未来的日期显示为空白
-#                 else:
-#                     user_status[date] = "✅" if check_md_content(file_content, date) else "⭕️"
-#     except FileNotFoundError:
-#         print(f"Error: Could not find file {file_name}")
-#         for date in date_range:
-#             user_status[date] = "⭕️"
-#     return user_status
-
 def get_user_study_status(nickname):
     user_status = {}
     file_name = f"{nickname}_EICL1st.md"
@@ -83,10 +66,8 @@ def get_user_study_status(nickname):
         with open(file_name, 'r', encoding='utf-8') as file:
             file_content = file.read()
             for date in date_range:
-                if date > current_date.date():
+                if date > current_date:
                     user_status[date] = " "  # 未来的日期显示为空白
-                elif date == current_date.date():
-                    user_status[date] = "✅" if check_md_content(file_content, date) else " "  # 当天有内容标记✅,否则空白
                 else:
                     user_status[date] = "✅" if check_md_content(file_content, date) else "⭕️"
     except FileNotFoundError:
@@ -94,6 +75,25 @@ def get_user_study_status(nickname):
         for date in date_range:
             user_status[date] = "⭕️"
     return user_status
+
+# def get_user_study_status(nickname):
+#     user_status = {}
+#     file_name = f"{nickname}_EICL1st.md"
+#     try:
+#         with open(file_name, 'r', encoding='utf-8') as file:
+#             file_content = file.read()
+#             for date in date_range:
+#                 if date > current_date.date():
+#                     user_status[date] = " "  # 未来的日期显示为空白
+#                 elif date == current_date.date():
+#                     user_status[date] = "✅" if check_md_content(file_content, date) else " "  # 当天有内容标记✅,否则空白
+#                 else:
+#                     user_status[date] = "✅" if check_md_content(file_content, date) else "⭕️"
+#     except FileNotFoundError:
+#         print(f"Error: Could not find file {file_name}")
+#         for date in date_range:
+#             user_status[date] = "⭕️"
+#     return user_status
 
 
 def check_weekly_status(user_status, date):
