@@ -23,6 +23,7 @@
 - Maybe 90 %
 
 ## Notes
+<!-- EICL1st_START -->
 ### 2024.06.24
 - In this 21-day co-learning plan, I aim to significantly enhance my English proficiency. My daily routine will involve thorough grammar review, journaling in English, and utilizing GPT to refine my grammatical accuracy. Additionally, I will employ a browser extension to capture new vocabulary encountered in my reading materials and maintain a daily vocabulary log.
 
@@ -100,6 +101,7 @@
 
 ### 2024.07.05
 
+<!-- EICL1st_END -->
 --- 
 听写笔记的方法和演示，以 https://www.bilibili.com/video/BV1U7411a7xG 为例，仅参考：
 
