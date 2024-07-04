@@ -1,4 +1,5 @@
 import os
+import re
 from github import Github
 from datetime import datetime, timedelta
 import pytz
@@ -48,39 +49,51 @@ def check_weekly_status(user_commits, user, date):
     missing_days = sum(1 for d in week_dates if user_commits[user].get(d, "⭕️") == "⭕️")
     return "❌" if missing_days > 2 else user_commits[user].get(date, "⭕️")
 
-# 生成新的表格内容
-new_table = ['| EICL1st· Name | ' + ' | '.join(date_range) + ' |\n',
-             '| ------------- | ' + ' | '.join(['----' for _ in date_range]) + ' |\n']
-
-for user in contributors:
-    row = f"| {user} |"
-    for date in date_range:
-        day = datetime.strptime(date, "%m.%d").replace(year=2024, tzinfo=beijing_tz)
-        if day > current_date:
-            status = " "  # 未来的日期显示为空白
-        else:
-            status = check_weekly_status(user_commits, user, date)
-        row += f" {status} |"
-    new_table.append(row + '\n')
-
 # 读取README.md文件
 with open('README.md', 'r') as file:
     content = file.read()
 
-# 查找标记并替换内容
+# 查找标记并提取表格内容
 start_marker = "<!-- START_COMMIT_TABLE -->"
 end_marker = "<!-- END_COMMIT_TABLE -->"
 start_index = content.find(start_marker)
 end_index = content.find(end_marker)
 
 if start_index != -1 and end_index != -1:
+    table_content = content[start_index + len(start_marker):end_index].strip()
+    table_rows = table_content.split('\n')[2:]  # 跳过表头和分隔行
+    
+    # 解析现有表格并更新提交状态
+    new_table = ['| EICL1st· Name | ' + ' | '.join(date_range) + ' |\n',
+                 '| ------------- | ' + ' | '.join(['----' for _ in date_range]) + ' |\n']
+    
+    for row in table_rows:
+        match = re.match(r'\|\s*\[([^\]]+)\]\(([^)]+)\)\s*\|', row)
+        if match:
+            display_name = match.group(1)
+            github_url = match.group(2)
+            github_username = github_url.split('/')[-1]
+            
+            if github_username in contributors:
+                new_row = f"| [{display_name}]({github_url}) |"
+                for date in date_range:
+                    day = datetime.strptime(date, "%m.%d").replace(year=2024, tzinfo=beijing_tz)
+                    if day > current_date:
+                        status = " "  # 未来的日期显示为空白
+                    else:
+                        status = check_weekly_status(user_commits, github_username, date)
+                    new_row += f" {status} |"
+                new_table.append(new_row + '\n')
+        else:
+            new_table.append(row + '\n')
+    
+    # 更新README.md文件
     new_content = (
         content[:start_index + len(start_marker)] + 
         '\n' + ''.join(new_table) + '\n' + 
         content[end_index:]
     )
     
-    # 写入更新后的内容
     with open('README.md', 'w') as file:
         file.write(new_content)
 else:
