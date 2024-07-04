@@ -14,17 +14,53 @@ date_range = [(start_date + timedelta(days=x)) for x in range((end_date - start_
 # 获取当前北京时间
 current_date = datetime.now(beijing_tz).date()
 
+# def check_md_content(file_content, date):
+#     # 构建可以匹配两种日期格式的正则表达式
+#     date_pattern = r'###\s*' + date.strftime("%Y.%-m.%-d").replace('.0', '.') + r'|' + date.strftime("%Y.%m.%d")
+#     next_date_pattern = r'###\s*\d{4}\.(?:0?[1-9]|1[0-2])\.(?:0?[1-9]|[12][0-9]|3[01])'
+    
+#     # 查找当前日期的位置
+#     current_date_match = re.search(date_pattern, file_content)
+#     if not current_date_match:
+#         return False
+    
+#     start_pos = current_date_match.end()
+    
+#     # 查找下一个日期的位置
+#     next_date_match = re.search(next_date_pattern, file_content[start_pos:])
+    
+#     if next_date_match:
+#         end_pos = start_pos + next_date_match.start()
+#         content = file_content[start_pos:end_pos]
+#     else:
+#         content = file_content[start_pos:]
+    
+#     # 移除内容中的空白字符
+#     content = re.sub(r'\s', '', content)
+    
+#     return len(content) > 10
+
+
 def check_md_content(file_content, date):
-    # 构建可以匹配两种日期格式的正则表达式
-    date_pattern = r'###\s*' + date.strftime("%Y.%-m.%-d").replace('.0', '.') + r'|' + date.strftime("%Y.%m.%d")
-    next_date_pattern = r'###\s*\d{4}\.(?:0?[1-9]|1[0-2])\.(?:0?[1-9]|[12][0-9]|3[01])'
+    # 构建更灵活的日期模式
+    date_patterns = [
+        r'###\s*' + date.strftime("%Y.%m.%d"),
+        r'###\s*' + date.strftime("%Y.%-m.%-d"),
+        r'###\s*' + date.strftime("%-m.%-d")
+    ]
+    
+    # 使用 | 连接所有模式，创建一个组合模式
+    combined_pattern = '|'.join(date_patterns)
     
     # 查找当前日期的位置
-    current_date_match = re.search(date_pattern, file_content)
+    current_date_match = re.search(combined_pattern, file_content)
     if not current_date_match:
         return False
     
     start_pos = current_date_match.end()
+    
+    # 构建下一个日期的模式
+    next_date_pattern = r'###\s*(\d{4}\.)?(\d{1,2}\.\d{1,2})'
     
     # 查找下一个日期的位置
     next_date_match = re.search(next_date_pattern, file_content[start_pos:])
@@ -39,6 +75,8 @@ def check_md_content(file_content, date):
     content = re.sub(r'\s', '', content)
     
     return len(content) > 10
+
+
 
 def get_user_study_status(nickname):
     user_status = {}
