@@ -14,25 +14,50 @@ date_range = [(start_date + timedelta(days=x)) for x in range((end_date - start_
 # 获取当前北京时间
 current_date = datetime.now(beijing_tz)
 
-def check_md_content(file_content, date):
-    # 提取 <!-- EICL1st_START --> 和 <!-- EICL1st_END --> 之间的内容
-    start_tag = "<!-- EICL1st_START -->"
-    end_tag = "<!-- EICL1st_END -->"
-    start_index = file_content.find(start_tag)
-    end_index = file_content.find(end_tag)
+# def check_md_content(file_content, date):
+#     # 提取 <!-- EICL1st_START --> 和 <!-- EICL1st_END --> 之间的内容
+#     start_tag = "<!-- EICL1st_START -->"
+#     end_tag = "<!-- EICL1st_END -->"
+#     start_index = file_content.find(start_tag)
+#     end_index = file_content.find(end_tag)
     
-    if start_index != -1 and end_index != -1:
-        content = file_content[start_index + len(start_tag):end_index].strip()
-    else:
-        content = file_content  # 如果没有找到标签，使用整个文件内容
+#     if start_index != -1 and end_index != -1:
+#         content = file_content[start_index + len(start_tag):end_index].strip()
+#     else:
+#         content = file_content  # 如果没有找到标签，使用整个文件内容
 
+#     date_pattern = r'###\s*' + date.strftime("%Y.%m.%d")
+#     content_pattern = date_pattern + r'([\s\S]*?)(?=###|\Z)'
+#     match = re.search(content_pattern, content)
+#     if match:
+#         content = match.group(1).strip()
+#         return len(content) > 10
+#     return False
+def check_md_content(file_content, date):
     date_pattern = r'###\s*' + date.strftime("%Y.%m.%d")
-    content_pattern = date_pattern + r'([\s\S]*?)(?=###|\Z)'
-    match = re.search(content_pattern, content)
-    if match:
-        content = match.group(1).strip()
-        return len(content) > 10
-    return False
+    next_date_pattern = r'###\s*\d{4}\.\d{2}\.\d{2}'
+    
+    # 查找当前日期的位置
+    current_date_match = re.search(date_pattern, file_content)
+    if not current_date_match:
+        return False
+    
+    start_pos = current_date_match.end()
+    
+    # 查找下一个日期的位置
+    next_date_match = re.search(next_date_pattern, file_content[start_pos:])
+    
+    if next_date_match:
+        end_pos = start_pos + next_date_match.start()
+        content = file_content[start_pos:end_pos]
+    else:
+        content = file_content[start_pos:]
+    
+    # 移除内容中的空白字符
+    content = re.sub(r'\s', '', content)
+    
+    return len(content) > 10
+
 
 def get_user_study_status(nickname):
     user_status = {}
