@@ -8,18 +8,16 @@ import logging
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
-# 设置北京时区
-beijing_tz = pytz.timezone('Asia/Shanghai')
+# 设置UTC时区
+utc_tz = pytz.UTC
 
 # 定义日期范围（从6月24日到7月14日）
-start_date = datetime(2024, 6, 24, tzinfo=beijing_tz)
-end_date = datetime(2024, 7, 14, tzinfo=beijing_tz)
-date_range = [(start_date + timedelta(days=x))
-              for x in range((end_date - start_date).days + 1)]
+start_date = datetime(2024, 6, 24, 16, 0, tzinfo=utc_tz)
+end_date = datetime(2024, 7, 14, 16, 0, tzinfo=utc_tz)
+date_range = [(start_date + timedelta(days=x)) for x in range((end_date - start_date).days + 1)]
 
-# 获取当前北京时间
-current_date = datetime.now(beijing_tz).date()
-
+# 获取当前UTC时间
+current_date = datetime.now(utc_tz)
 
 def check_md_content(file_content, date):
     try:
@@ -34,8 +32,7 @@ def check_md_content(file_content, date):
             return False
 
         # 提取标记之间的内容
-        content = file_content[start_index +
-                               len(start_marker):end_index].strip()
+        content = file_content[start_index + len(start_marker):end_index].strip()
 
         # 在提取的内容中查找日期
         date_patterns = [
@@ -65,7 +62,6 @@ def check_md_content(file_content, date):
         logging.error(f"Error in check_md_content: {str(e)}")
         return False
 
-
 def get_user_study_status(nickname):
     user_status = {}
     file_name = f"{nickname}_EICL1st.md"
@@ -73,63 +69,50 @@ def get_user_study_status(nickname):
         with open(file_name, 'r', encoding='utf-8') as file:
             file_content = file.read()
         for date in date_range:
-            if date.date() > current_date:
+            if date > current_date:
                 user_status[date] = " "  # 未来的日期显示为空白
-            elif date.date() == current_date:
-                user_status[date] = "✅" if check_md_content(
-                    file_content, date) else " "  # 当天有内容标记✅,否则空白
+            elif date <= current_date < date + timedelta(days=1):
+                user_status[date] = "✅" if check_md_content(file_content, date) else " "  # 当天有内容标记✅,否则空白
             else:
-                user_status[date] = "✅" if check_md_content(
-                    file_content, date) else "⭕️"
+                user_status[date] = "✅" if check_md_content(file_content, date) else "⭕️"
         logging.info(f"Successfully processed file for user: {nickname}")
     except FileNotFoundError:
         logging.error(f"Error: Could not find file {file_name}")
         user_status = {date: "⭕️" for date in date_range}
     except Exception as e:
-        logging.error(
-            f"Unexpected error processing file for {nickname}: {str(e)}")
+        logging.error(f"Unexpected error processing file for {nickname}: {str(e)}")
         user_status = {date: "⭕️" for date in date_range}
     return user_status
 
-
 def check_weekly_status(user_status, date):
     try:
-        week_start = date.date() - timedelta(days=date.weekday())
+        week_start = (date - timedelta(days=date.weekday())).replace(hour=16, minute=0, second=0, microsecond=0)
         week_dates = [week_start + timedelta(days=x) for x in range(7)]
-        week_dates = [d for d in week_dates if d in [date.date()
-                                                     for date in date_range] and d <= date.date()]
-        missing_days = sum(1 for d in week_dates if user_status.get(
-            datetime.combine(d, datetime.min.time(), tzinfo=beijing_tz), "⭕️") == "⭕️")
+        week_dates = [d for d in week_dates if d in date_range and d <= date]
+        missing_days = sum(1 for d in week_dates if user_status.get(d, "⭕️") == "⭕️")
         return "❌" if missing_days > 2 else user_status.get(date, "⭕️")
     except Exception as e:
         logging.error(f"Error in check_weekly_status: {str(e)}")
         return "⭕️"
 
-
 def get_all_user_files():
     return [f.split('_')[0] for f in os.listdir('.') if f.endswith('_EICL1st.md')]
-
 
 def update_readme(content, start_marker, end_marker):
     try:
         start_index = content.find(start_marker)
         end_index = content.find(end_marker)
         if start_index == -1 or end_index == -1:
-            logging.error(
-                "Error: Couldn't find the table markers in README.md")
+            logging.error("Error: Couldn't find the table markers in README.md")
             return content
 
-        table_content = content[start_index +
-                                len(start_marker):end_index].strip()
+        table_content = content[start_index + len(start_marker):end_index].strip()
         table_rows = table_content.split('\n')[2:]  # 跳过表头和分隔行
 
         new_table = [
             f'{start_marker}\n',
-            '| EICL1st· Name | ' +
-            ' | '.join(date.strftime("%-m.%-d")
-                       for date in date_range) + ' |\n',
-            '| ------------- | ' +
-            ' | '.join(['----' for _ in date_range]) + ' |\n'
+            '| EICL1st· Name | ' + ' | '.join(date.strftime("%-m.%-d") for date in date_range) + ' |\n',
+            '| ------------- | ' + ' | '.join(['----' for _ in date_range]) + ' |\n'
         ]
 
         existing_users = set()
@@ -170,14 +153,12 @@ def update_readme(content, start_marker, end_marker):
         logging.error(f"Error in update_readme: {str(e)}")
         return content
 
-
 def main():
     try:
         with open('README.md', 'r', encoding='utf-8') as file:
             content = file.read()
 
-        new_content = update_readme(
-            content, "<!-- START_COMMIT_TABLE -->", "<!-- END_COMMIT_TABLE -->")
+        new_content = update_readme(content, "<!-- START_COMMIT_TABLE -->", "<!-- END_COMMIT_TABLE -->")
 
         with open('README.md', 'w', encoding='utf-8') as file:
             file.write(new_content)
@@ -185,7 +166,6 @@ def main():
         logging.info("README.md has been successfully updated.")
     except Exception as e:
         logging.error(f"An error occurred in main function: {str(e)}")
-
 
 if __name__ == "__main__":
     main()
