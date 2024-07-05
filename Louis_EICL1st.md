@@ -20,6 +20,7 @@
 Maybe 80%
 
 ## Notes
+<!-- EICL1st_START --> 
 ### 2024.6.24
 1. 今天学习了 “如何重新认识英语这门语言”
 2. 背了10个单词
@@ -74,7 +75,7 @@ result: 结果 n.
 concern：关切的事 n.  
 employee：受雇者 n.  
 
-
+<!-- EICL1st_END -->
 听写笔记的方法和演示，以 https://www.bilibili.com/video/BV1U7411a7xG 为例，仅参考：
 
 1. 不看字幕，听写发音内容，不会的没关系，尽量写即可

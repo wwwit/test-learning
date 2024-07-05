@@ -22,7 +22,7 @@ I'm also preparing to join EDCON and other ETH global events, so English is very
 Yes 100%
 
 ## Notes
-
+<!-- EICL1st_START --> 
 ### 2024.6.24
 
 D1

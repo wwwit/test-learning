@@ -23,6 +23,7 @@ Yes 100%
 
 ## Notes
 
+<!-- EICL1st_START --> 
 ### 2024.6.24
 
 D1
@@ -344,3 +345,5 @@ Note
 - An amusement ride 娱乐设施
 
 https://www.bilibili.com/video/BV1U7411a7xG/?p=21&spm_id_from=pageDriver&vd_source=bc0666711d2280c24d54945ab9c11146
+
+<!-- EICL1st_END -->

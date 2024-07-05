@@ -18,6 +18,7 @@
 
 ## Do you think you will finish the whole CoLearning program?
 [Yes 100% or Maybe xx%]
+<!-- EICL1st_START --> 
 ### 2024.06.24
 Mother terisa, who received a noble pice prize from her work on behalf of the pool of india 87 years old.
 
@@ -72,3 +73,4 @@ Mother terisa, who received a noble pice prize from her work on behalf of the po
 - Teresa：人名，死记硬背
 - Nobel Peace Prize：诺贝尔和平奖。Pace 的发音跟 Peace 有区别，Pace 是步伐、速度的意思。
 - Calcutta：加尔各答，死记硬背
+<!-- EICL1st_END -->
