@@ -18,7 +18,7 @@
 
 ## Do you think you will finish the whole CoLearning program?
 [Yes 100% or Maybe xx%]
-### 7.4
+### 2024.6.24
 Mother terisa, who received a noble pice prize from her work on behalf of the pool of india 87 years old.
 
 反复几遍直到听不出：Mother terisa, who received a Noble Pace Prize from her work on behalf of poor and dies of dia cacke in India, she was 87 years old.
@@ -28,8 +28,11 @@ Mother terisa, who received a noble pice prize from her work on behalf of the po
 第二节答案：Mother Teresa, who received a Nobel Peace Prize for her work on behalf of the poor, dies in Calcutta India. She was 87 years old.
 
 笔记：
-
-### 7.5
+### 2024.6.25
+### 2024.6.26
+### 2024.6.27
+### 2024.6.28
+### 2024.6.29
 added some test content 
 
 听写笔记的方法和演示，以 https://www.bilibili.com/video/BV1U7411a7xG 为例，仅参考：
