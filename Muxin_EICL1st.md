@@ -21,6 +21,34 @@ Yes 100%
 
 ## Notes
 
+### 2024.07.07
+
+test1
+
+### 2024.07.06
+
+What I heard:
+
+28. It's a pain, because my fridges are adopted today, and food's gone.
+29. It was simply going by the book when they come to land without air, and he xxx pilot train for this type of xxx.
+30. It is the vegetable some loved and hate, but now I'm new bread of broccoli, super broccoli developed xxx may protect against heart disease even some kinds of cancer.
+
+### 2024.07.05
+
+What I heard:
+
+28. It's a pain, because my fridges are adopted today, and food's gone.
+29. It was simply going by the book when they come to land without air, and he xxx pilot train for this type of xxx.
+30. It is the vegetable some loved and hate, but now I'm new bread of broccoli, super broccoli developed xxx may protect against heart disease even some kinds of cancer.
+
+### 2024.07.04
+
+What I heard:
+
+28. It's a pain, because my fridges are adopted today, and food's gone.
+29. It was simply going by the book when they come to land without air, and he xxx pilot train for this type of xxx.
+30. It is the vegetable some loved and hate, but now I'm new bread of broccoli, super broccoli developed xxx may protect against heart disease even some kinds of cancer.
+
 ### 2024.07.03
 
 What I heard:
