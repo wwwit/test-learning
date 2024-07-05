@@ -20,7 +20,7 @@ Hi, I'm Muxin, a software engineer with 10 years of development experience, curr
 Yes 100%
 
 ## Notes
-
+<!-- EICL1st_START --> 
 ### 2024.07.07
 
 test1
@@ -250,6 +250,7 @@ Notes:
   - Anki，我也用过，但是坚持不下来，目前本人已经不背单词了，记单词的方法就是多看/多听，次数多了就记住了，有时候也会用笔手写在笔记本上，写一遍也会加深印象，但如果平时用不着也会很快忘记
 
   当然目前已经有很多 AI 工具了，特别是 ChatGPT，可以跟 TA 问问题或者练习对话，也是挺不错的。
+<!-- EICL1st_END -->
 
 #### Dictation 01
 

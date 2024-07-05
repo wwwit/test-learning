@@ -20,8 +20,9 @@
 [Yes 100% or Maybe xx%]
 
 ## Notes
-
+<!-- EICL1st_START --> 
 ### 2024.7.7
 
 ### 2024.7.6
 
+<!-- EICL1st_END -->
