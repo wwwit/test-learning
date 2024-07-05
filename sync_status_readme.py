@@ -84,8 +84,9 @@ def get_user_study_status(nickname):
     try:
         with open(file_name, 'r', encoding='utf-8') as file:
             file_content = file.read()
+        submission_date = get_submission_date(current_date)
+        logging.info(f"Current submission date: {submission_date}")
         for date in date_range:
-            submission_date = get_submission_date(current_date)
             if date.date() > submission_date:
                 user_status[date] = " "  # 未来的日期显示为空白
             elif date.date() == submission_date:
@@ -94,7 +95,7 @@ def get_user_study_status(nickname):
             else:
                 user_status[date] = "✅" if check_md_content(
                     file_content, date) else "⭕️"
-        logging.info(f"Successfully processed file for user: {nickname}")
+        logging.info(f"User status for {nickname}: {user_status}")
     except FileNotFoundError:
         logging.error(f"Error: Could not find file {file_name}")
         user_status = {date: "⭕️" for date in date_range}
@@ -109,11 +110,22 @@ def check_weekly_status(user_status, date):
     try:
         week_start = date.date() - timedelta(days=date.weekday())
         week_dates = [week_start + timedelta(days=x) for x in range(7)]
+        current_submission_date = get_submission_date(current_date)
         week_dates = [d for d in week_dates if d in [date.date()
-                                                     for date in date_range] and d <= get_submission_date(current_date)]
+                                                     for date in date_range] and d <= current_submission_date]
+
         missing_days = sum(1 for d in week_dates if user_status.get(
             datetime.combine(d, datetime.min.time(), tzinfo=utc_tz), "⭕️") == "⭕️")
-        return "❌" if missing_days > 2 else user_status.get(date, "⭕️")
+
+        logging.info(
+            f"Date: {date}, Week dates: {week_dates}, Missing days: {missing_days}")
+
+        if missing_days > 2:
+            return "❌"
+        elif date.date() > current_submission_date:
+            return " "
+        else:
+            return user_status.get(date, "⭕️")
     except Exception as e:
         logging.error(f"Error in check_weekly_status: {str(e)}")
         return "⭕️"
