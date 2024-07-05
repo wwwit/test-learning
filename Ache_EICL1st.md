@@ -36,12 +36,12 @@ Mother terisa, who received a noble pice prize from her work on behalf of the po
 
 ### 2024.06.27
 
-
+- 第二节答案：Mother Teresa, who received a Nobel Peace Prize for her work on behalf of the poor, dies in Calcutta India. She was 87 years old.
 ### 2024.06.28
 - 撒旦法发噶士大夫方法烦烦烦烦烦烦烦烦烦按时地方烦烦烦烦烦烦烦烦烦烦烦烦烦烦烦
 
 ### 2024.06.29
-
+- 第二节答案：Mother Teresa, who received a Nobel Peace Prize for her work on behalf of the poor, dies in Calcutta India. She was 87 years old.
 
 ### 2024.06.30
 added some test content 
