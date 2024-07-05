@@ -16,9 +16,6 @@ start_date = datetime(2024, 6, 24, 16, 0, tzinfo=utc_tz)
 end_date = datetime(2024, 7, 14, 16, 0, tzinfo=utc_tz)
 date_range = [(start_date + timedelta(days=x)) for x in range((end_date - start_date).days + 1)]
 
-# 获取当前UTC时间
-current_date = datetime.now(utc_tz)
-
 def check_md_content(file_content, date):
     try:
         # 查找标记之间的内容
@@ -38,16 +35,19 @@ def check_md_content(file_content, date):
         date_patterns = [
             r'###\s*' + date.strftime("%Y.%m.%d"),
             r'###\s*' + date.strftime("%Y.%-m.%-d"),
-            r'###\s*' + date.strftime("%-m.%-d")
+            r'###\s*' + date.strftime("%-m.%-d"),
+            r'###\s*' + date.strftime("%Y/%m/%d"),
+            r'###\s*' + date.strftime("%-m/%-d")
         ]
         combined_pattern = '|'.join(date_patterns)
         current_date_match = re.search(combined_pattern, content)
 
         if not current_date_match:
+            logging.info(f"No match found for date {date.strftime('%Y-%m-%d')}")
             return False
 
         start_pos = current_date_match.end()
-        next_date_pattern = r'###\s*(\d{4}\.)?(\d{1,2}\.\d{1,2})'
+        next_date_pattern = r'###\s*(\d{4}\.)?(\d{1,2}[\.\/]\d{1,2})'
         next_date_match = re.search(next_date_pattern, content[start_pos:])
 
         if next_date_match:
@@ -57,6 +57,7 @@ def check_md_content(file_content, date):
             date_content = content[start_pos:]
 
         date_content = re.sub(r'\s', '', date_content)
+        logging.info(f"Content length for {date.strftime('%Y-%m-%d')}: {len(date_content)}")
         return len(date_content) > 10
     except Exception as e:
         logging.error(f"Error in check_md_content: {str(e)}")
@@ -68,6 +69,8 @@ def get_user_study_status(nickname):
     try:
         with open(file_name, 'r', encoding='utf-8') as file:
             file_content = file.read()
+        logging.info(f"File content length for {nickname}: {len(file_content)}")
+        current_date = datetime.now(utc_tz)
         for date in date_range:
             if date > current_date:
                 user_status[date] = " "  # 未来的日期显示为空白
@@ -75,6 +78,7 @@ def get_user_study_status(nickname):
                 user_status[date] = "✅" if check_md_content(file_content, date) else " "  # 当天有内容标记✅,否则空白
             else:
                 user_status[date] = "✅" if check_md_content(file_content, date) else "⭕️"
+            logging.info(f"Status for {nickname} on {date.strftime('%Y-%m-%d')}: {user_status[date]}")
         logging.info(f"Successfully processed file for user: {nickname}")
     except FileNotFoundError:
         logging.error(f"Error: Could not find file {file_name}")
