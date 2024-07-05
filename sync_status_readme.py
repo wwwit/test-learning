@@ -8,29 +8,17 @@ import logging
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
-# 设置UTC时区
-utc_tz = pytz.UTC
+# 设置北京时区
+beijing_tz = pytz.timezone('Asia/Shanghai')
 
 # 定义日期范围（从6月24日到7月14日）
-start_date = datetime(2024, 6, 24, 16, 0, tzinfo=utc_tz)
-end_date = datetime(2024, 7, 14, 16, 0, tzinfo=utc_tz)
+start_date = datetime(2024, 6, 24, tzinfo=beijing_tz)
+end_date = datetime(2024, 7, 14, tzinfo=beijing_tz)
 date_range = [(start_date + timedelta(days=x))
               for x in range((end_date - start_date).days + 1)]
 
-# 获取当前UTC时间
-current_date = datetime.now(utc_tz)
-
-
-def get_submission_date(timestamp):
-    # 将时间戳转换为 UTC
-    utc_time = timestamp.astimezone(utc_tz)
-
-    # 计算提交日期
-    submission_date = utc_time.date()
-    if utc_time.hour < 16:
-        submission_date -= timedelta(days=1)
-
-    return submission_date
+# 获取当前北京时间
+current_date = datetime.now(beijing_tz).date()
 
 
 def check_md_content(file_content, date):
@@ -84,18 +72,16 @@ def get_user_study_status(nickname):
     try:
         with open(file_name, 'r', encoding='utf-8') as file:
             file_content = file.read()
-        submission_date = get_submission_date(current_date)
-        logging.info(f"Current submission date: {submission_date}")
         for date in date_range:
-            if date.date() > submission_date:
+            if date.date() > current_date:
                 user_status[date] = " "  # 未来的日期显示为空白
-            elif date.date() == submission_date:
+            elif date.date() == current_date:
                 user_status[date] = "✅" if check_md_content(
                     file_content, date) else " "  # 当天有内容标记✅,否则空白
             else:
                 user_status[date] = "✅" if check_md_content(
                     file_content, date) else "⭕️"
-        logging.info(f"User status for {nickname}: {user_status}")
+        logging.info(f"Successfully processed file for user: {nickname}")
     except FileNotFoundError:
         logging.error(f"Error: Could not find file {file_name}")
         user_status = {date: "⭕️" for date in date_range}
@@ -110,22 +96,11 @@ def check_weekly_status(user_status, date):
     try:
         week_start = date.date() - timedelta(days=date.weekday())
         week_dates = [week_start + timedelta(days=x) for x in range(7)]
-        current_submission_date = get_submission_date(current_date)
         week_dates = [d for d in week_dates if d in [date.date()
-                                                     for date in date_range] and d <= current_submission_date]
-
+                                                     for date in date_range] and d <= date.date()]
         missing_days = sum(1 for d in week_dates if user_status.get(
-            datetime.combine(d, datetime.min.time(), tzinfo=utc_tz), "⭕️") == "⭕️")
-
-        logging.info(
-            f"Date: {date}, Week dates: {week_dates}, Missing days: {missing_days}")
-
-        if missing_days > 2:
-            return "❌"
-        elif date.date() > current_submission_date:
-            return " "
-        else:
-            return user_status.get(date, "⭕️")
+            datetime.combine(d, datetime.min.time(), tzinfo=beijing_tz), "⭕️") == "⭕️")
+        return "❌" if missing_days > 2 else user_status.get(date, "⭕️")
     except Exception as e:
         logging.error(f"Error in check_weekly_status: {str(e)}")
         return "⭕️"
