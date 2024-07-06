@@ -233,8 +233,8 @@ def update_readme(content, start_marker, end_marker):
                     new_row += "  |"  # 淘汰后的日期保持空白
                 else:
                     status = check_weekly_status(user_status, date, user_tz)
-                    if status == "❌":
-                        is_eliminated = True
+                    # if status == "❌":
+                    #     is_eliminated = True
                     new_row += f" {status} |"
             new_table.append(new_row + '\n')
             logging.info(f"Added new user: {user}")
