@@ -54,13 +54,23 @@ def check_md_content(file_content, date, user_tz):
             hour=0, minute=0, second=0, microsecond=0)
 
         # 在提取的内容中查找日期
+        # date_patterns = [
+        #     r'###\s*' + local_date.strftime("%Y.%m.%d"),
+        #     r'###\s*' + local_date.strftime("%Y.%-m.%-d"),
+        #     r'###\s*' + local_date.strftime("%-m.%-d"),
+        #     r'###\s*' + local_date.strftime("%Y/%m/%d"),
+        #     r'###\s*' + local_date.strftime("%-m/%-d")
+        # ]
         date_patterns = [
             r'###\s*' + local_date.strftime("%Y.%m.%d"),
-            r'###\s*' + local_date.strftime("%Y.%-m.%-d"),
-            r'###\s*' + local_date.strftime("%-m.%-d"),
+            r'###\s*' + local_date.strftime("%Y.%m.%d").replace('.0', '.'),
+            r'###\s*' +
+            local_date.strftime("%m.%d").lstrip('0').replace('.0', '.'),
             r'###\s*' + local_date.strftime("%Y/%m/%d"),
-            r'###\s*' + local_date.strftime("%-m/%-d")
+            r'###\s*' +
+            local_date.strftime("%m/%d").lstrip('0').replace('/0', '/')
         ]
+
         combined_pattern = '|'.join(date_patterns)
         current_date_match = re.search(combined_pattern, content)
 
@@ -166,10 +176,18 @@ def update_readme(content, start_marker, end_marker):
                                 len(start_marker):end_index].strip()
         table_rows = table_content.split('\n')[2:]  # 跳过表头和分隔行
 
+        # new_table = [
+        #     f'{start_marker}\n',
+        #     '| EICL1st· Name | ' +
+        #     ' | '.join(date.strftime("%-m.%-d")
+        #                for date in date_range) + ' |\n',
+        #     '| ------------- | ' +
+        #     ' | '.join(['----' for _ in date_range]) + ' |\n'
+        # ]
         new_table = [
             f'{start_marker}\n',
             '| EICL1st· Name | ' +
-            ' | '.join(date.strftime("%-m.%-d")
+            ' | '.join(date.strftime("%m.%d").lstrip('0')
                        for date in date_range) + ' |\n',
             '| ------------- | ' +
             ' | '.join(['----' for _ in date_range]) + ' |\n'
