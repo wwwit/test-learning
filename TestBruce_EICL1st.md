@@ -15,7 +15,7 @@ timezone: Pacific/Auckland
 
 ---
 
-# Bruce Xu
+# 新西兰时区Bruce Xu
 
 Hi guys, I'm Bruce, co-initiator of LXDAO and ETHPanda. I live oversea, but I work remotely and mainly in Chinese communities, so my English skills are degenerating, therefore, I would like to co-learn with you guys to practice more.
 
@@ -27,7 +27,7 @@ Yes 100%
 
 ## Notes
 <!-- EICL1st_START --> 
-### 2024.6.24
+### 2024.06.24
 
 D1
 
@@ -65,7 +65,7 @@ D3
 
 https://www.bilibili.com/video/BV1U7411a7xG?p=4&spm_id_from=pageDriver&vd_source=bc0666711d2280c24d54945ab9c11146
 
-### 2024.6.25
+### 2024.06.25
 
 D3
 
@@ -97,7 +97,7 @@ D5
 - I have come here to choose bubble gun and kick your ass and all bubble guns.
 - I have come here to chu bubble gun and kick ass and all out of bubble guns.
 
-### 2024.6.26
+### 2024.06.26
 
 Fix:
 
@@ -121,7 +121,7 @@ D7
 
 https://www.bilibili.com/video/BV1U7411a7xG?p=7&spm_id_from=pageDriver&vd_source=bc0666711d2280c24d54945ab9c11146
 
-### 6.27
+### 2024.06.27
 
 - Another rude trader costs bank millions.
 - Another road trader has cost bank billions.
@@ -154,7 +154,7 @@ Notes:
 
 https://www.bilibili.com/video/BV1U7411a7xG/
 
-### 6.28
+### 2024.06.28
 
 D9
 
@@ -187,7 +187,7 @@ Notes:
 
 - lofty 崇高的
 
-### 6.29
+### 2024.06.29
 
 D11
 
@@ -219,7 +219,7 @@ Notes:
 
 https://www.bilibili.com/video/BV1U7411a7xG?p=13&spm_id_from=pageDriver&vd_source=bc0666711d2280c24d54945ab9c11146
 
-### 6.30
+### 2024.06.30
 
 Notes:
 
@@ -349,5 +349,13 @@ Note
 
 https://www.bilibili.com/video/BV1U7411a7xG/?p=21&spm_id_from=pageDriver&vd_source=bc0666711d2280c24d54945ab9c11146
 
+### 7.6
+- 啊手动阀手动阀三个地方噶撒旦发射点发生阿斯蒂芬人格人格人格上的热锅上的风格
+### 7.7
 
+- 啊手动阀手动阀三个地方噶撒旦发射点发生阿斯蒂芬人格人格人格上的热锅上的风格
+### 7.8
+- 
+### 7.9
+- 啊手动阀手动阀三个地方噶撒旦发射点发生阿斯蒂芬人格人格人格上的热锅上的风格
 <!-- EICL1st_END -->

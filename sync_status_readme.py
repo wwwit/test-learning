@@ -3,6 +3,7 @@ import re
 from datetime import datetime, timedelta
 import pytz
 import logging
+import time
 
 # 设置日志
 logging.basicConfig(level=logging.INFO,
@@ -140,20 +141,34 @@ def check_weekly_status(user_status, date, user_tz):
             hour=0, minute=0, second=0, microsecond=0)
         week_start = (local_date - timedelta(days=local_date.weekday()))
         week_dates = [week_start + timedelta(days=x) for x in range(7)]
-        week_dates = [d for d in week_dates if d.astimezone(utc_tz).date(
-        ) in [date.date() for date in date_range] and d <= local_date]
-        missing_days = sum(1 for d in week_dates if user_status.get(
-            d.astimezone(utc_tz), "⭕️") == "⭕️")
+
+        # 只考虑到当前日期为止的日期
+        current_date = datetime.now(user_tz).replace(
+            hour=0, minute=0, second=0, microsecond=0)
+        week_dates = [d for d in week_dates if d.astimezone(utc_tz).date() in [date.date() for date in date_range]
+                      and d <= min(local_date, current_date)]
+
+        missing_days = 0
+        for d in week_dates:
+            # 将日期转换为与 user_status 键匹配的格式
+            date_key = datetime.combine(d.astimezone(
+                utc_tz).date(), datetime.min.time()).replace(tzinfo=utc_tz)
+            status = user_status.get(date_key, "⭕️")
+            print(f"Date: {d}, Status: {status}")
+            if status == "⭕️":
+                missing_days += 1
+
+        print(f"Total missing days: {missing_days}")
 
         # 检查是否已经被淘汰
-        if any(user_status.get(d, "") == "❌" for d in date_range if d < date):
+        if any(user_status.get(datetime.combine(d.date(), datetime.min.time()).replace(tzinfo=utc_tz), "") == "❌" for d in date_range if d < date):
             return "❌"
 
         # 如果本周缺勤超过两次，标记为淘汰
         if missing_days > 2:
             return "❌"
 
-        return user_status.get(date, "⭕️")
+        return user_status.get(datetime.combine(date.date(), datetime.min.time()).replace(tzinfo=utc_tz), "⭕️")
     except Exception as e:
         logging.error(f"Error in check_weekly_status: {str(e)}")
         return "⭕️"
@@ -176,14 +191,6 @@ def update_readme(content, start_marker, end_marker):
                                 len(start_marker):end_index].strip()
         table_rows = table_content.split('\n')[2:]  # 跳过表头和分隔行
 
-        # new_table = [
-        #     f'{start_marker}\n',
-        #     '| EICL1st· Name | ' +
-        #     ' | '.join(date.strftime("%-m.%-d")
-        #                for date in date_range) + ' |\n',
-        #     '| ------------- | ' +
-        #     ' | '.join(['----' for _ in date_range]) + ' |\n'
-        # ]
         new_table = [
             f'{start_marker}\n',
             '| EICL1st· Name | ' +
@@ -233,8 +240,8 @@ def update_readme(content, start_marker, end_marker):
                     new_row += "  |"  # 淘汰后的日期保持空白
                 else:
                     status = check_weekly_status(user_status, date, user_tz)
-                    # if status == "❌":
-                    #     is_eliminated = True
+                    if status == "❌":
+                        is_eliminated = True
                     new_row += f" {status} |"
             new_table.append(new_row + '\n')
             logging.info(f"Added new user: {user}")
