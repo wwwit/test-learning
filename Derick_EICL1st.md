@@ -104,11 +104,12 @@ timezone: Asia/Shanghai
 ### 2024.07.04
 - 当
 ### 2024.07.05
-- what is the most important thing in your life?  the world is full of temptations, and it's easy to lose sight of what truly matters. For me, the most important thing is my family. They are my rock, my support system, and my motivation. Without them, I wouldn't be where I am today. I cherish every moment I spend with them, whether it's a simple meal together or a weekend getaway. They are my everything, and I am grateful for their unwavering love and support.
+- what is the most important thing in your life?  the world is full of temptations, and it's easy to lose sight of what truly matters. For me, the most important thing is my family. They are my rock, my support system, and my motivation. Without them, I wouldn't be where I am today. I cherish every moment I spend with them, whether it's a simple meal together or a weekend getaway. They are my everything, and I am grateful for their 
+### 2024.07.06
+unwavering love and support.
 - 在UTC 8 提交7.6的内容
 - 北京时间修改提交7.6
-### 2024.07.06
-
+- 豆腐干士大夫敢死队风格士大夫敢死队风格
 <!-- EICL1st_END -->
 --- 
 听写笔记的方法和演示，以 https://www.bilibili.com/video/BV1U7411a7xG 为例，仅参考：
