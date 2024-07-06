@@ -174,6 +174,46 @@ def check_weekly_status(user_status, date, user_tz):
         return "⭕️"
 
 
+def check_overall_status(user_status, date, user_tz):
+    try:
+        local_date = date.astimezone(user_tz).replace(
+            hour=0, minute=0, second=0, microsecond=0)
+        current_date = datetime.now(user_tz).replace(
+            hour=0, minute=0, second=0, microsecond=0)
+
+        # 计算总共缺勤天数
+        missing_days = sum(1 for d in date_range
+                           if d <= min(date, current_date) and
+                           user_status.get(d, "⭕️") == "⭕️")
+        # missing_days = 0
+        # for d in week_dates:
+        #     # 将日期转换为与 user_status 键匹配的格式
+        #     date_key = datetime.combine(d.astimezone(
+        #         utc_tz).date(), datetime.min.time()).replace(tzinfo=utc_tz)
+        #     status = user_status.get(date_key, "⭕️")
+        #     print(f"Date: {d}, Status: {status}")
+        #     if status == "⭕️":
+        #         missing_days += 1
+
+        # 如果总共缺勤超过两次，标记为淘汰
+        if missing_days > 2:
+            return "❌"
+
+        # 当天的状态
+        if local_date == current_date:
+            return user_status.get(date, " ")
+        # 过去的日期
+        elif local_date < current_date:
+            return user_status.get(date, "⭕️")
+        # 未来的日期
+        else:
+            return " "
+
+    except Exception as e:
+        logging.error(f"Error in check_overall_status: {str(e)}")
+        return "⭕️"
+
+
 def get_all_user_files():
     return [f.split('_')[0] for f in os.listdir('.') if f.endswith('_EICL1st.md')]
 
@@ -216,7 +256,7 @@ def update_readme(content, start_marker, end_marker):
                     if is_eliminated:
                         new_row += "  |"  # 淘汰后的日期保持空白
                     else:
-                        status = check_weekly_status(
+                        status = check_overall_status(
                             user_status, date, user_tz)
                         if status == "❌":
                             is_eliminated = True
@@ -239,7 +279,7 @@ def update_readme(content, start_marker, end_marker):
                 if is_eliminated:
                     new_row += "  |"  # 淘汰后的日期保持空白
                 else:
-                    status = check_weekly_status(user_status, date, user_tz)
+                    status = check_overall_status(user_status, date, user_tz)
                     if status == "❌":
                         is_eliminated = True
                     new_row += f" {status} |"
