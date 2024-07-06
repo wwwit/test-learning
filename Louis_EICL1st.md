@@ -75,6 +75,13 @@ result: 结果 n.
 concern：关切的事 n.  
 employee：受雇者 n.  
 
+### 2024.7.2
+1. 背了17个单词
+2. 今天学习了 “每日英语听写 Daily English Dictation 1-400”
+3. 听写笔记的方法和演示，以 https://www.bilibili.com/video/BV1U7411a7xG 为例，仅参考：
+4. 不看字幕，听写发音内容，不会的没关系，尽量写即可
+5. 反复听几遍，然后继续把内容进行完善，直到无法继续写出来
+6. 到第二天或者查看答案，进行对比和完善总结，把不会的单词进行记录，跟读句子进行训练。
 <!-- EICL1st_END -->
 听写笔记的方法和演示，以 https://www.bilibili.com/video/BV1U7411a7xG 为例，仅参考：
 
