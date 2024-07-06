@@ -18,7 +18,6 @@ end_date = datetime(2024, 7, 14, tzinfo=utc_tz)
 date_range = [start_date + timedelta(days=x)
               for x in range((end_date - start_date).days + 1)]
 
-
 def get_user_timezone(file_content):
     # 尝试从 YAML 前置元数据中获取时区
     yaml_match = re.search(r'---\s*\ntimezone:\s*(\S+)\s*\n---', file_content)
@@ -29,19 +28,16 @@ def get_user_timezone(file_content):
         except pytz.exceptions.UnknownTimeZoneError:
             logging.warning(
                 f"Unknown timezone: {timezone_str}. Using default Asia/Shanghai.")
-
     # 如果没找到或无效，返回默认时区（中国标准时间）
     return pytz.timezone('Asia/Shanghai')
-
 
 def check_md_content(file_content, date, user_tz):
     try:
         # 查找标记之间的内容
-        start_marker = "<!-- EICL1st_START -->"
-        end_marker = "<!-- EICL1st_END -->"
+        start_marker = ""
+        end_marker = ""
         start_index = file_content.find(start_marker)
         end_index = file_content.find(end_marker)
-
         if start_index == -1 or end_index == -1:
             logging.warning("EICL1st markers not found in the file")
             return False
@@ -55,13 +51,6 @@ def check_md_content(file_content, date, user_tz):
             hour=0, minute=0, second=0, microsecond=0)
 
         # 在提取的内容中查找日期
-        # date_patterns = [
-        #     r'###\s*' + local_date.strftime("%Y.%m.%d"),
-        #     r'###\s*' + local_date.strftime("%Y.%-m.%-d"),
-        #     r'###\s*' + local_date.strftime("%-m.%-d"),
-        #     r'###\s*' + local_date.strftime("%Y/%m/%d"),
-        #     r'###\s*' + local_date.strftime("%-m/%-d")
-        # ]
         date_patterns = [
             r'###\s*' + local_date.strftime("%Y.%m.%d"),
             r'###\s*' + local_date.strftime("%Y.%m.%d").replace('.0', '.'),
@@ -74,7 +63,6 @@ def check_md_content(file_content, date, user_tz):
 
         combined_pattern = '|'.join(date_patterns)
         current_date_match = re.search(combined_pattern, content)
-
         if not current_date_match:
             logging.info(
                 f"No match found for date {local_date.strftime('%Y-%m-%d')}")
@@ -83,7 +71,6 @@ def check_md_content(file_content, date, user_tz):
         start_pos = current_date_match.end()
         next_date_pattern = r'###\s*(\d{4}\.)?(\d{1,2}[\.\/]\d{1,2})'
         next_date_match = re.search(next_date_pattern, content[start_pos:])
-
         if next_date_match:
             end_pos = start_pos + next_date_match.start()
             date_content = content[start_pos:end_pos]
@@ -98,17 +85,14 @@ def check_md_content(file_content, date, user_tz):
         logging.error(f"Error in check_md_content: {str(e)}")
         return False
 
-
 def get_user_study_status(nickname):
     user_status = {}
     file_name = f"{nickname}_EICL1st.md"
     try:
         with open(file_name, 'r', encoding='utf-8') as file:
             file_content = file.read()
-
         # 获取用户时区
         user_tz = get_user_timezone(file_content)
-
         logging.info(
             f"File content length for {nickname}: {len(file_content)}")
         current_date = datetime.now(user_tz).replace(
@@ -134,43 +118,38 @@ def get_user_study_status(nickname):
         user_status = {date: "⭕️" for date in date_range}
     return user_status
 
-
-def check_weekly_status(user_status, date, user_tz):
+def check_overall_status(user_status, date, user_tz):
     try:
         local_date = date.astimezone(user_tz).replace(
             hour=0, minute=0, second=0, microsecond=0)
-        week_start = (local_date - timedelta(days=local_date.weekday()))
-        week_dates = [week_start + timedelta(days=x) for x in range(7)]
-
-        # 只考虑到当前日期为止的日期
         current_date = datetime.now(user_tz).replace(
             hour=0, minute=0, second=0, microsecond=0)
-        week_dates = [d for d in week_dates if d.astimezone(utc_tz).date() in [date.date() for date in date_range]
-                      and d <= min(local_date, current_date)]
 
-        missing_days = 0
-        for d in week_dates:
-            # 将日期转换为与 user_status 键匹配的格式
-            date_key = datetime.combine(d.astimezone(
-                utc_tz).date(), datetime.min.time()).replace(tzinfo=utc_tz)
-            status = user_status.get(date_key, "⭕️")
-            print(f"Date: {d}, Status: {status}")
-            if status == "⭕️":
-                missing_days += 1
-
-        print(f"Total missing days: {missing_days}")
+        # 计算总共缺勤天数
+        missing_days = sum(1 for d in date_range 
+                           if d <= min(date, current_date) and 
+                           user_status.get(d, "⭕️") == "⭕️")
 
         # 检查是否已经被淘汰
-        if any(user_status.get(datetime.combine(d.date(), datetime.min.time()).replace(tzinfo=utc_tz), "") == "❌" for d in date_range if d < date):
+        if any(user_status.get(d, "") == "❌" for d in date_range if d < date):
             return "❌"
 
-        # 如果本周缺勤超过两次，标记为淘汰
+        # 如果总共缺勤超过两次，标记为淘汰
         if missing_days > 2:
             return "❌"
 
-        return user_status.get(datetime.combine(date.date(), datetime.min.time()).replace(tzinfo=utc_tz), "⭕️")
+        # 当天的状态
+        if local_date == current_date:
+            return user_status.get(date, " ")
+        # 过去的日期
+        elif local_date < current_date:
+            return user_status.get(date, "⭕️")
+        # 未来的日期
+        else:
+            return " "
+
     except Exception as e:
-        logging.error(f"Error in check_weekly_status: {str(e)}")
+        logging.error(f"Error in check_overall_status: {str(e)}")
         return "⭕️"
 
 
@@ -217,7 +196,6 @@ def check_overall_status(user_status, date, user_tz):
 def get_all_user_files():
     return [f.split('_')[0] for f in os.listdir('.') if f.endswith('_EICL1st.md')]
 
-
 def update_readme(content, start_marker, end_marker):
     try:
         start_index = content.find(start_marker)
@@ -254,7 +232,7 @@ def update_readme(content, start_marker, end_marker):
                 is_eliminated = False
                 for date in date_range:
                     if is_eliminated:
-                        new_row += "  |"  # 淘汰后的日期保持空白
+                        new_row += " |"  # 淘汰后的日期显示为空白
                     else:
                         status = check_overall_status(
                             user_status, date, user_tz)
@@ -277,8 +255,9 @@ def update_readme(content, start_marker, end_marker):
             is_eliminated = False
             for date in date_range:
                 if is_eliminated:
-                    new_row += "  |"  # 淘汰后的日期保持空白
+                    new_row += " |"  # 淘汰后的日期显示为空白
                 else:
+                    status = check_overall_status(user_status, date, user_tz)
                     status = check_overall_status(user_status, date, user_tz)
                     if status == "❌":
                         is_eliminated = True
@@ -293,26 +272,22 @@ def update_readme(content, start_marker, end_marker):
             ''.join(new_table) +
             content[end_index + len(end_marker):]
         )
+
     except Exception as e:
         logging.error(f"Error in update_readme: {str(e)}")
         return content
-
 
 def main():
     try:
         with open('README.md', 'r', encoding='utf-8') as file:
             content = file.read()
-
         new_content = update_readme(
-            content, "<!-- START_COMMIT_TABLE -->", "<!-- END_COMMIT_TABLE -->")
-
+            content, "", "")
         with open('README.md', 'w', encoding='utf-8') as file:
             file.write(new_content)
-
         logging.info("README.md has been successfully updated.")
     except Exception as e:
         logging.error(f"An error occurred in main function: {str(e)}")
-
 
 if __name__ == "__main__":
     main()
