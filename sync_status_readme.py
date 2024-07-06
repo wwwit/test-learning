@@ -78,7 +78,6 @@ def get_user_study_status(nickname):
                 user_status[date] = "✅" if check_md_content(file_content, date) else " "  # 当天有内容标记✅,否则空白
             else:
                 user_status[date] = "✅" if check_md_content(file_content, date) else "⭕️"
-            logging.info(f"Status for {nickname} on {date.strftime('%Y-%m-%d')}: {user_status[date]}")
         logging.info(f"Successfully processed file for user: {nickname}")
     except FileNotFoundError:
         logging.error(f"Error: Could not find file {file_name}")
@@ -94,7 +93,16 @@ def check_weekly_status(user_status, date):
         week_dates = [week_start + timedelta(days=x) for x in range(7)]
         week_dates = [d for d in week_dates if d in date_range and d <= date]
         missing_days = sum(1 for d in week_dates if user_status.get(d, "⭕️") == "⭕️")
-        return "❌" if missing_days > 2 else user_status.get(date, "⭕️")
+        
+        # 检查是否已经被淘汰
+        if any(user_status.get(d, "") == "❌" for d in date_range if d < date):
+            return "❌"
+        
+        # 如果本周缺勤超过两次，标记为淘汰
+        if missing_days > 2:
+            return "❌"
+        
+        return user_status.get(date, "⭕️")
     except Exception as e:
         logging.error(f"Error in check_weekly_status: {str(e)}")
         return "⭕️"
@@ -127,9 +135,15 @@ def update_readme(content, start_marker, end_marker):
                 existing_users.add(display_name)
                 user_status = get_user_study_status(display_name)
                 new_row = f"| {display_name} |"
+                is_eliminated = False
                 for date in date_range:
-                    status = check_weekly_status(user_status, date)
-                    new_row += f" {status} |"
+                    if is_eliminated:
+                        new_row += "  |"  # 淘汰后的日期保持空白
+                    else:
+                        status = check_weekly_status(user_status, date)
+                        if status == "❌":
+                            is_eliminated = True
+                        new_row += f" {status} |"
                 new_table.append(new_row + '\n')
             else:
                 logging.warning(f"Skipping invalid row: {row}")
@@ -140,9 +154,15 @@ def update_readme(content, start_marker, end_marker):
         for user in new_users:
             user_status = get_user_study_status(user)
             new_row = f"| {user} |"
+            is_eliminated = False
             for date in date_range:
-                status = check_weekly_status(user_status, date)
-                new_row += f" {status} |"
+                if is_eliminated:
+                    new_row += "  |"  # 淘汰后的日期保持空白
+                else:
+                    status = check_weekly_status(user_status, date)
+                    if status == "❌":
+                        is_eliminated = True
+                    new_row += f" {status} |"
             new_table.append(new_row + '\n')
             logging.info(f"Added new user: {user}")
 
