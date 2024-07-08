@@ -142,7 +142,6 @@ def check_weekly_status(user_status, date, user_tz):
         week_start = (local_date - timedelta(days=local_date.weekday()))
         week_dates = [week_start + timedelta(days=x) for x in range(7)]
 
-        # 只考虑到当前日期为止的日期
         current_date = datetime.now(user_tz).replace(
             hour=0, minute=0, second=0, microsecond=0)
         week_dates = [d for d in week_dates if d.astimezone(utc_tz).date() in [date.date() for date in date_range]
@@ -150,28 +149,34 @@ def check_weekly_status(user_status, date, user_tz):
 
         missing_days = 0
         for d in week_dates:
-            # 将日期转换为与 user_status 键匹配的格式
             date_key = datetime.combine(d.astimezone(
                 utc_tz).date(), datetime.min.time()).replace(tzinfo=utc_tz)
             status = user_status.get(date_key, "⭕️")
-            print(f"Date: {d}, Status: {status}")
+            
             if status == "⭕️":
                 missing_days += 1
+            
+            # 如果是当天且已经过完（不是未来的日期）
+            if d == local_date and d <= current_date:
+                if missing_days > 2:
+                    return "❌"
+                else:
+                    return status
+            
+            # 如果累计两个O，且不是当天，标记为X
+            if missing_days > 2 and d < local_date:
+                return "❌"
 
-        print(f"Total missing days: {missing_days}")
+        # 如果是未来的日期，返回空白
+        if local_date > current_date:
+            return " "
 
-        # 检查是否已经被淘汰
-        if any(user_status.get(datetime.combine(d.date(), datetime.min.time()).replace(tzinfo=utc_tz), "") == "❌" for d in date_range if d < date):
-            return "❌"
-
-        # 如果本周缺勤超过两次，标记为淘汰
-        if missing_days > 2:
-            return "❌"
-
+        # 返回当天的实际状态
         return user_status.get(datetime.combine(date.date(), datetime.min.time()).replace(tzinfo=utc_tz), "⭕️")
     except Exception as e:
         logging.error(f"Error in check_weekly_status: {str(e)}")
         return "⭕️"
+
 
 
 def check_overall_status(user_status, date, user_tz):
