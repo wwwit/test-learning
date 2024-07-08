@@ -100,16 +100,19 @@ timezone: Asia/Shanghai
 - I've been practicing my English by reading aloud from an [article about job and work vocabulary for beginners](https://blog.ithuo.net/posts/learning-english-job-work-vocabulary-a1-beginners/). It's interesting to learn about the author's work experiences and how their job has impacted them. I'm also learning English for work purposes, and I'm hoping to get more positive reinforcement from my studies. While I can now understand technical articles, I still struggle with direct communication and need more practice with everyday conversation.
 
 - I discussed automating some processes for our collaborative learning project with Muxin. My next task is to develop a script that will help reduce conflicts when others submit their assignments. This will be my first contribution to LXDAO, and I'm excited to be involved in such a project.
-
-### 2024.07.04
-- 当
-### 2024.07.05
-- what is the most important thing in your life?  the world is full of temptations, and it's easy to lose sight of what truly matters. For me, the most important thing is my family. They are my rock, my support system, and my motivation. Without them, I wouldn't be where I am today. I cherish every moment I spend with them, whether it's a simple meal together or a weekend getaway. They are my everything, and I am grateful for their 
-### 2024.07.06
-unwavering love and support.
+- unwavering love and support.
 - 在UTC 8 提交7.6的内容
 - 北京时间修改提交7.6
 - 豆腐干士大夫敢死队风格士大夫敢死队风格
+### 2024.07.04
+- 当
+
+### 2024.07.05
+- what is the most important thing in your life?  the world is full of temptations, and it's easy to lose sight of what truly matters. For me, the most important thing is my family. They are my rock, my support system, and my motivation. Without them, I wouldn't be where I am today. I cherish every moment I spend with them, whether it's a simple meal together or a weekend getaway. They are my everything, and I am grateful for their 
+### 2024.07.06
+### 2024.07.07
+### 2024.07.08
+- 手动阀手动阀手动阀各地广泛士大夫敢死队
 <!-- Content_END -->
 --- 
 听写笔记的方法和演示，以 https://www.bilibili.com/video/BV1U7411a7xG 为例，仅参考：

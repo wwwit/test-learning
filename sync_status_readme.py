@@ -256,7 +256,7 @@ def update_readme(content, start_marker, end_marker):
                     if is_eliminated:
                         new_row += "  |"  # 淘汰后的日期保持空白
                     else:
-                        status = check_overall_status(
+                        status = check_weekly_status(
                             user_status, date, user_tz)
                         if status == "❌":
                             is_eliminated = True
@@ -279,7 +279,7 @@ def update_readme(content, start_marker, end_marker):
                 if is_eliminated:
                     new_row += "  |"  # 淘汰后的日期保持空白
                 else:
-                    status = check_overall_status(user_status, date, user_tz)
+                    status = check_weekly_status(user_status, date, user_tz)
                     if status == "❌":
                         is_eliminated = True
                     new_row += f" {status} |"
