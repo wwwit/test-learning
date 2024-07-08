@@ -24,10 +24,10 @@ Hi, I'm Muxin, a software engineer with 10 years of development experience, curr
 Yes 100%
 
 ## Notes
-<!-- Content_START --> 
-### 2024.07.07
 
-test1
+<!-- EICL1st_START -->
+
+### 2024.07.11
 
 28. It's a pain, because my fridges are adopted today, and food's gone.
 29. It was simply going by the book when they come to land without air, and he xxx pilot train for this type of xxx.
@@ -41,11 +41,16 @@ test1
 
 28. It's a pain, because my fridges are adopted today, and food's gone.
 29. It was simply going by the book when they come to land without air, and he xxx pilot train for this type of xxx.
-30. It is the vegetable some loved and hate, but now I'm new bread of broccoli, super broccoli developed xxx may protect against heart disease even some kinds of cancer.
 
-### 2024.07.04
+### 2024.07.08
 
 What I heard:
+
+25. The search for the missing under generate power live lights as family members wait by the among degree 7 tiers.
+26. It's a kind of thing you look forward to instead of you know some workouts you xxx and you think of xxx just fine.
+27. Super hero costumes as usual are big this year especially for recent movies, like The World and the Green Lintern.
+
+### 2024.07.07
 
 28. It's a pain, because my fridges are adopted today, and food's gone.
 29. It was simply going by the book when they come to land without air, and he xxx pilot train for this type of xxx.
@@ -57,7 +62,11 @@ What I heard:
 
 ### 2024.07.05
 
-1111
+What I heard:
+
+25. The search for the missing under generate power live lights as family members wait by the among degree 7 tiers.
+26. It's a kind of thing you look forward to instead of you know some workouts you xxx and you think of xxx just fine.
+27. Super hero costumes as usual are big this year especially for recent movies, like The World and the Green Lintern.
 
 ### 2024.07.04
 
@@ -125,36 +134,7 @@ Notes:
 
 ### 2024.06.29
 
-What I heard:
-
-16. Bad sold and flutted, the Philippines it's been hit by second typhon in a week.
-17. A few years ago, they were thought to be useless past the prime, not now.
-18. If you are breathing, it is not too late, get up and get going.
-
-What they said:
-
-16. Battered, soaked and flooded; the Philippines is being hit by its 2nd typhoon in a week.
-17. A few years ago they were thought to be useless - past their prime - not now!
-18. If you are breathing, it is not too late, get up and get going.
-
-Notes:
-
-16. battered: hurt by being repeatedly hit/damaged, especially by being used a lot; soaked: extremely wet; flooded: covered with water(spelling); typhoon(spelling)
-17. past their prime, in my prime, before their prime, prime: the best/producted/creative time in someone's life; rescue dogs
-
 ### 2024.06.28
-
-What I heard:
-
-13. Asian tiger mosquito xxx in the South East of Asia, but in the past few years they spread all the cross south east in the United State.
-14. A cat repeatlly have 9 lives and he clearly want to spend at least one of them here in New York City.
-15. The friend xxx take changes in every 711 on everage, often leave kids zone out spond up, unable in consentrate.
-
-What they said:
-
-13. Asian tiger mosquitoes are native to the tropics of Southeast Asia, but in the past few years, they've spread all across the southeastern United States.
-14. Cats reputedly have 9 lives, and he clearly wanted to spend at least one of them here in New York City.
-15. The frantic pacing - scene changes every 11 seconds on average - often leaves kids zoned out and spun up; unable to concentrate.
 
 Notes:
 
@@ -244,7 +224,7 @@ Notes:
   - Anki，我也用过，但是坚持不下来，目前本人已经不背单词了，记单词的方法就是多看/多听，次数多了就记住了，有时候也会用笔手写在笔记本上，写一遍也会加深印象，但如果平时用不着也会很快忘记
 
   当然目前已经有很多 AI 工具了，特别是 ChatGPT，可以跟 TA 问问题或者练习对话，也是挺不错的。
-<!-- Content_END -->
+  <!-- EICL1st_END -->
 
 #### Dictation 01
 
