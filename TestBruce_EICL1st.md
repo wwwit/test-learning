@@ -26,7 +26,7 @@ I'm also preparing to join EDCON and other ETH global events, so English is very
 Yes 100%
 
 ## Notes
-<!-- EICL1st_START --> 
+<!-- Content_START --> 
 ### 2024.06.24
 
 D1
@@ -358,4 +358,4 @@ https://www.bilibili.com/video/BV1U7411a7xG/?p=21&spm_id_from=pageDriver&vd_sour
 - 
 ### 7.9
 - 啊手动阀手动阀三个地方噶撒旦发射点发生阿斯蒂芬人格人格人格上的热锅上的风格
-<!-- EICL1st_END -->
+<!-- Content_END -->

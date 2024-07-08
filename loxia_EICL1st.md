@@ -20,7 +20,7 @@ Yes 100%
 
 
 ## Notes
-<!-- EICL1st_START --> 
+<!-- Content_START --> 
 ### 2024.6.17
 
 Registered for EICL1st and created my personal .md file, where I added my self-introduction.
@@ -259,4 +259,4 @@ World Series: 世界系列赛
 ### 2024.7.3
 
 
-<!-- EICL1st_END -->
+<!-- Content_END -->

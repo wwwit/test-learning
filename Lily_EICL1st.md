@@ -1,5 +1,5 @@
 # I'm lily, i want inva
-<!-- EICL1st_START -->
+<!-- Content_START -->
 ### 2024.06.24
 - 新的一天o not know what will happen in the future是新的开始，我们都有美好的未来
 ### 2024.06.25
@@ -43,7 +43,7 @@
 
 ### 2024.07.06
 - 实际上我们永远do not know what will happen in the future
-<!-- EICL1st_END -->
+<!-- Content_END -->
 -- 手动阀手动阀
 
 

@@ -37,8 +37,8 @@ def get_user_timezone(file_content):
 def check_md_content(file_content, date, user_tz):
     try:
         # 查找标记之间的内容
-        start_marker = "<!-- EICL1st_START -->"
-        end_marker = "<!-- EICL1st_END -->"
+        start_marker = "<!-- Content_START -->"
+        end_marker = "<!-- Content_END -->"
         start_index = file_content.find(start_marker)
         end_index = file_content.find(end_marker)
 

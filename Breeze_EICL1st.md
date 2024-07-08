@@ -22,7 +22,7 @@ Hello everyone，My name is Breeze. I am a software development engineer special
 Yes 100%
 
 ## Notes
-<!-- EICL1st_START --> 
+<!-- Content_START --> 
 ### 2024.6.24
 刷重新认识英语这门语言
 关于识别英语程序的方案设计，这几个类比还挺有意思的
@@ -141,4 +141,4 @@ caution: is the 连读成 izh
 dictation9:
 a sattellize who's character the space discovery 20 years ago , is about four over the world ,but nobody know when and where to leave him
 
-<!-- EICL1st_END -->
+<!-- Content_END -->

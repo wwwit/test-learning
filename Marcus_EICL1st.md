@@ -18,7 +18,7 @@
 
 ## Do you think you will finish the whole CoLearning program?
 [Yes 100% or Maybe 100%]
-<!-- EICL1st_START --> 
+<!-- Content_START --> 
 ### 2024.07.02
 What i heared
 15. The frantic pacing scence change every 11 seconds on average often leaves kids XXX end XXX only leave them unable to the concentrate(30%)
@@ -242,4 +242,4 @@ Next
 泛听内容 https://www.bilibili.com/video/BV1U7411a7xG/?p=3&vd_source=bc0666711d2280c24d54945ab9c11146
 
    
-<!-- EICL1st_END -->
+<!-- Content_END -->
