@@ -59,14 +59,13 @@ What I heard:
 
 28. It's a pain, because my fridges are adopted today, and food's gone.
 29. It was simply going by the book when they come to land without air, and he xxx pilot train for this type of xxx.
-What I heard:
+    What I heard:
 
-25. The search for the missing under generate power live lights as family members wait by the among degree 7 tiers.
-26. It's a kind of thing you look forward to instead of you know some workouts you xxx and you think of xxx just fine.
-27. Super hero costumes as usual are big this year especially for recent movies, like The World and the Green Lintern.
+30. The search for the missing under generate power live lights as family members wait by the among degree 7 tiers.
+31. It's a kind of thing you look forward to instead of you know some workouts you xxx and you think of xxx just fine.
+32. Super hero costumes as usual are big this year especially for recent movies, like The World and the Green Lintern.
+
 ### 2024.07.05
-
-
 
 ### 2024.07.04
 
@@ -113,24 +112,6 @@ Notes:
 24. St Louis 城市名 圣路易斯; the World Series opener 世界大赛揭幕战; celsius 摄氏度，fahrenheit 华氏度
 
 ### 2024.06.30
-
-What I heard:
-
-19. The 67 years old grandpa has been found alive after being starve for 7 days at the bottom of overvim.
-20. Saturday, an ultrelight plane crashed to the ferris wheel at xxx festival in Austrilia, yeah somehow no one on the minute and no one was hurt.
-21. Heidi won the world over with her forever cute but slightly confused look.
-
-What they said:
-
-19. A 67-year-old grandpa has been found alive after being stuck for 6 days at the bottom of a ravine.
-20. Saturdday, an ultralight plane crashed into a Ferris wheel at a rural festival in Australia, yet somehow no one on the amusement ride nor the plane was hurt.
-21. Heidi won the world over with her forever cute but slightly confused look.
-
-Notes:
-
-19. stuck = in a place where can't leave; 6?? 7??; ravine = a deep narrow valley with steep sides
-20. ultralight plane; crash into; rural 农村的; amusement ride 游乐设施; nor = also not
-21. cross-eyed 斗鸡眼; opossum 负鼠
 
 ### 2024.06.29
 
