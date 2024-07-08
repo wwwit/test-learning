@@ -1,6 +1,7 @@
 ---
-timezone: Pacific/Auckland  # 新西兰标准时间 (UTC+12)
+timezone: Pacific/Auckland # 新西兰标准时间 (UTC+12)
 ---
+
 # 英语残酷共学第 1 期残酷指引
 
 > ⚠️ 正式开始前请确保你在身体上和精神上都处于合适的状态，请刻意练习，残酷面对 🆒。
@@ -28,17 +29,15 @@ Yes 100%
 
 test1
 
-### 2024.07.06
+28. It's a pain, because my fridges are adopted today, and food's gone.
+29. It was simply going by the book when they come to land without air, and he xxx pilot train for this type of xxx.
 
-What I heard:
+### 2024.07.10
 
 28. It's a pain, because my fridges are adopted today, and food's gone.
 29. It was simply going by the book when they come to land without air, and he xxx pilot train for this type of xxx.
-30. It is the vegetable some loved and hate, but now I'm new bread of broccoli, super broccoli developed xxx may protect against heart disease even some kinds of cancer.
 
-### 2024.07.05
-
-What I heard:
+### 2024.07.09
 
 28. It's a pain, because my fridges are adopted today, and food's gone.
 29. It was simply going by the book when they come to land without air, and he xxx pilot train for this type of xxx.
@@ -50,27 +49,19 @@ What I heard:
 
 28. It's a pain, because my fridges are adopted today, and food's gone.
 29. It was simply going by the book when they come to land without air, and he xxx pilot train for this type of xxx.
-30. It is the vegetable some loved and hate, but now I'm new bread of broccoli, super broccoli developed xxx may protect against heart disease even some kinds of cancer.
 
-### 2024.07.03
-
-What I heard:
+### 2024.07.06
 
 28. It's a pain, because my fridges are adopted today, and food's gone.
 29. It was simply going by the book when they come to land without air, and he xxx pilot train for this type of xxx.
-30. It is the vegetable some loved and hate, but now I'm new bread of broccoli, super broccoli developed xxx may protect against heart disease even some kinds of cancer.
 
-What they said:
+### 2024.07.05
 
-28. It's a pain, 'cuz my fridge is ... I dumped it today, and the food's gone.
-29. He says he was simply going by the book when it comes to landing without gear, and that he and his fellow pilots train for these types of incidents.
-30. It is the vegetable some love to hate! But now a new breed of broccoli - super broccoli - developed in Britain may protect against heart disease even some kinds of cancer.
+1111
 
-Notes:
+### 2024.07.04
 
-28. dump = throw away
-29. go by the book = follow the written law; landing gear means wheels; incidents
-30. love to hate = super hate; breed = type
+### 2024.07.03
 
 ### 2024.07.02
 
