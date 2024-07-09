@@ -34,9 +34,6 @@ Yes 100%
 
 ### 2024.07.10
 
-28. It's a pain, because my fridges are adopted today, and food's gone.
-29. It was simply going by the book when they come to land without air, and he xxx pilot train for this type of xxx.
-
 ### 2024.07.09
 
 ### 2024.07.08
