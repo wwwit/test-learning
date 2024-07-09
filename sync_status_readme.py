@@ -5,11 +5,12 @@ import pytz
 import logging
 
 # Constants
-START_DATE = datetime(2024, 6, 24, tzinfo=pytz.UTC)
-END_DATE = datetime(2024, 7, 14, tzinfo=pytz.UTC)
+START_DATE = datetime.fromisoformat(os.environ.get('START_DATE', '2024-06-24T00:00:00+00:00')).replace(tzinfo=pytz.UTC)
+END_DATE = datetime.fromisoformat(os.environ.get('END_DATE', '2024-07-14T23:59:59+00:00')).replace(tzinfo=pytz.UTC)
 DEFAULT_TIMEZONE = 'Asia/Shanghai'
-FILE_SUFFIX = '_EICL1st.md'
+FILE_SUFFIX = os.environ.get('FILE_SUFFIX', '_EICL1st.md')
 README_FILE = 'README.md'
+FIELD_NAME = os.environ.get('FIELD_NAME', 'EICL1st· Name')
 Content_START_MARKER = "<!-- Content_START -->"
 Content_END_MARKER = "<!-- Content_END -->"
 TABLE_START_MARKER = "<!-- START_COMMIT_TABLE -->"
@@ -165,7 +166,7 @@ def update_readme(content):
 
         new_table = [
             f'{TABLE_START_MARKER}\n',
-            '| EICL1st· Name | ' +
+            f'| {FIELD_NAME} | ' +
             ' | '.join(date.strftime("%m.%d").lstrip('0')
                        for date in get_date_range()) + ' |\n',
             '| ------------- | ' +
@@ -195,24 +196,6 @@ def update_readme(content):
     except Exception as e:
         logging.error(f"Error in update_readme: {str(e)}")
         return content
-
-# def generate_user_row(user):
-#     user_status = get_user_study_status(user)
-#     with open(f"{user}{FILE_SUFFIX}", 'r', encoding='utf-8') as file:
-#         file_content = file.read()
-#     user_tz = get_user_timezone(file_content)
-#     new_row = f"| {user} |"
-#     is_eliminated = False
-#     for date in get_date_range():
-#         if is_eliminated:
-#             new_row += " |"
-#         else:
-#             status = check_weekly_status(user_status, date, user_tz)
-#             if status == "❌":
-#                 is_eliminated = True
-#             new_row += f" {status} |"
-#     return new_row + '\n'
-
 
 def generate_user_row(user):
     user_status = get_user_study_status(user)

@@ -4,9 +4,9 @@ on:
   pull_request_target:
     types: [closed]
   schedule:
-    - cron: '0 0 * * *'  # 每天午夜运行
+    - cron: "0 0 * * *" # 每天午夜运行
   push:
-    branches: [ main ]  # 每次推送到main分支时也运行
+    branches: [main] # 每次推送到main分支时也运行
 
 permissions:
   contents: write
@@ -25,9 +25,9 @@ jobs:
           script: |
             const { owner, repo } = context.repo;
             const username = context.payload.pull_request.user.login;
-            
+
             console.log(`Checking if ${username} is already a collaborator...`);
-            
+
             try {
               const { data: permissionLevel } = await github.rest.repos.getCollaboratorPermissionLevel({
                 owner,
@@ -48,7 +48,7 @@ jobs:
               }
               console.log(`${username} is not a collaborator.`);
             }
-            
+
             try {
               console.log(`Inviting ${username} as a collaborator...`);
               const response = await github.rest.repos.addCollaborator({
@@ -96,28 +96,32 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'schedule' || github.event_name == 'push'
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install PyGithub pytz
-    - name: Update README
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: python sync_status_readme.py
-    - name: Check for changes
-      id: git-check
-      run: |
-        git diff --exit-code README.md || echo "modified=true" >> $GITHUB_OUTPUT
-    - name: Commit changes
-      if: steps.git-check.outputs.modified == 'true'
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add README.md
-        git commit -m "Update commit status table"
-        git push
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install PyGithub pytz
+      - name: Update README
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          START_DATE: ${{ vars.START_DATE }}
+          END_DATE: ${{vars.END_DATE }}
+          FILE_SUFFIX: ${{vars.FILE_SUFFIX}}
+          FIELD_NAME: ${{vars.FIELD_NAME}}
+        run: python sync_status_readme.py
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --exit-code README.md || echo "modified=true" >> $GITHUB_OUTPUT
+      - name: Commit changes
+        if: steps.git-check.outputs.modified == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add README.md
+          git commit -m "Update commit status table"
+          git push
