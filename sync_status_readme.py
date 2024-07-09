@@ -97,19 +97,20 @@ def get_user_study_status(nickname):
         logging.info(
             f"File content length for {nickname}: {len(file_content)} user_tz: {user_tz}")
         current_date = datetime.now(user_tz).replace(
-            hour=0, minute=0, second=0, microsecond=0)
+            hour=0, minute=0, second=0, microsecond=0)  # - timedelta(days=1)
 
         for date in get_date_range():
             local_date = date.astimezone(user_tz).replace(
                 hour=0, minute=0, second=0, microsecond=0)
-            if local_date > current_date:
-                user_status[date] = " "
-            elif local_date == current_date:
+
+            if date.day == current_date.day:
                 user_status[date] = "✅" if check_md_content(
-                    file_content, date, user_tz) else " "
+                    file_content, date, pytz.UTC) else " "
+            elif date > current_date:
+                user_status[date] = " "
             else:
                 user_status[date] = "✅" if check_md_content(
-                    file_content, date, user_tz) else "⭕️"
+                    file_content, date, pytz.UTC) else "⭕️"
 
         logging.info(f"Successfully processed file for user: {nickname}")
     except FileNotFoundError:
@@ -224,12 +225,12 @@ def generate_user_row(user):
     current_week = None
 
     user_current_day = datetime.now(user_tz).replace(
-            hour=0, minute=0, second=0, microsecond=0)
+        hour=0, minute=0, second=0, microsecond=0)
     for date in get_date_range():
-        # 获取用户时区和当地时间进行比较，如果用户打卡时间大于当地时间，则不显示
+        # 获取用户时区和当地时间进行比较，如果用户打卡时间大于当地时间，则不显示- timedelta(days=1)
         user_datetime = date.astimezone(pytz.UTC).replace(
-                hour=0, minute=0, second=0, microsecond=0)
-        if is_eliminated or user_datetime > user_current_day:
+            hour=0, minute=0, second=0, microsecond=0)
+        if is_eliminated or (user_datetime > user_current_day and user_datetime.day > user_current_day.day):
             new_row += " |"
         else:
             user_date = user_datetime
