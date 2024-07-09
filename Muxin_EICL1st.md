@@ -1,5 +1,5 @@
 ---
-timezone: Pacific/Auckland # 新西兰标准时间 (UTC+12)
+timezone: Pacific/Auckland
 ---
 
 # 英语残酷共学第 1 期残酷指引

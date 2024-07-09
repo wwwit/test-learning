@@ -1,3 +1,6 @@
+---
+timezone: Pacific/Honolulu
+---
 # 英语残酷共学第 1 期残酷指引
 
 > ⚠️ 正式开始前请确保你在身体上和精神上都处于合适的状态，请刻意练习，残酷面对 🆒。
@@ -321,20 +324,20 @@ D19
 
 - old man found alive after 6 days
 - A 67 years old grandpa has been found alive after being stuck for 6 days at the bottom of the revein.
-
+### 7.4
 Fix
 
 A 67-year-old grandpa has been found alive after being stuck for 6 days at the bottom of a ravine.
-
+### 7.5
 Note
 
 - ravine a deep narrow valley with steep sides
-
+### 7.8
 D20
 
 - ultralight plane hit on the wheel in AU
 - Saturday an ultralight plane crashed to a fare wheel at a rural festival in Australia, yet somehow no one on the amusment ride nor the plane was hurt.
-
+### 7.9
 Fix
 
 Saturday, an ultralight plane crashed into a Ferris wheel at a rural festival in Australia, yet somehow no one on the amusement ride nor the plane was hurt.
@@ -345,5 +348,6 @@ Note
 - An amusement ride 娱乐设施
 
 https://www.bilibili.com/video/BV1U7411a7xG/?p=21&spm_id_from=pageDriver&vd_source=bc0666711d2280c24d54945ab9c11146
+
 
 <!-- Content_END -->
