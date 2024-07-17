@@ -6,13 +6,13 @@ import logging
 
 # Constants
 START_DATE = datetime.fromisoformat(os.environ.get(
-    'START_DATE', '2024-07-15T00:00:00+00:00')).replace(tzinfo=pytz.UTC)
+    'START_DATE', '2024-06-24T00:00:00+00:00')).replace(tzinfo=pytz.UTC)
 END_DATE = datetime.fromisoformat(os.environ.get(
-    'END_DATE', '2024-08-04T23:59:59+00:00')).replace(tzinfo=pytz.UTC)
+    'END_DATE', '2024-07-14T23:59:59+00:00')).replace(tzinfo=pytz.UTC)
 DEFAULT_TIMEZONE = 'Asia/Shanghai'
-FILE_SUFFIX = os.environ.get('FILE_SUFFIX', '_WICL1st.md')
+FILE_SUFFIX = os.environ.get('FILE_SUFFIX', '_EICL1st.md')
 README_FILE = 'README.md'
-FIELD_NAME = os.environ.get('FIELD_NAME', 'WICL1st· Name')
+FIELD_NAME = os.environ.get('FIELD_NAME', 'EICL1st· Name')
 Content_START_MARKER = "<!-- Content_START -->"
 Content_END_MARKER = "<!-- Content_END -->"
 TABLE_START_MARKER = "<!-- START_COMMIT_TABLE -->"
@@ -287,6 +287,31 @@ def generate_user_row(user):
     return new_row + '\n'
 
 
+def calculate_statistics(content):
+    start_index = content.find(TABLE_START_MARKER)
+    end_index = content.find(TABLE_END_MARKER)
+    if start_index == -1 or end_index == -1:
+        logging.error("Error: Couldn't find the table markers in README.md")
+        return None
+
+    table_content = content[start_index +
+                            len(TABLE_START_MARKER):end_index].strip()
+    rows = table_content.split('\n')[2:]  # Skip header and separator rows
+
+    total_participants = len(rows)
+    eliminated_participants = sum(1 for row in rows if '❌' in row)
+    completed_participants = total_participants - eliminated_participants
+    elimination_rate = (eliminated_participants /
+                        total_participants) * 100 if total_participants > 0 else 0
+
+    return {
+        'total_participants': total_participants,
+        'completed_participants': completed_participants,
+        'eliminated_participants': eliminated_participants,
+        'elimination_rate': elimination_rate
+    }
+
+
 def main():
     try:
         print_variables(
@@ -302,6 +327,40 @@ def main():
         with open(README_FILE, 'r', encoding='utf-8') as file:
             content = file.read()
         new_content = update_readme(content)
+        current_date = datetime.now(pytz.UTC)
+        if current_date > END_DATE:
+            stats = calculate_statistics(new_content)
+            if stats:
+                stats_content = f"\n\n## 统计数据\n\n"
+                stats_content += f"- 总参与人数: {stats['total_participants']}\n"
+                stats_content += f"- 完成人数: {stats['completed_participants']}\n"
+                stats_content += f"- 淘汰人数: {stats['eliminated_participants']}\n"
+                stats_content += f"- 淘汰率: {stats['elimination_rate']:.2f}%\n"
+            # 将统计数据添加到文件末尾
+            # 在<!-- END_COMMIT_TABLE -->标记后插入统计数据
+                # 检查是否已存在统计数据
+                stats_start = new_content.find("\n## 统计数据\n")
+                if stats_start != -1:
+                    # 如果存在，替换现有的统计数据
+                    stats_end = new_content.find("\n##", stats_start + 1)
+                    if stats_end == -1:
+                        stats_end = len(new_content)
+                    new_content = new_content[:stats_start] + \
+                        stats_content + new_content[stats_end:]
+                else:
+                    # 如果不存在，在<!-- END_COMMIT_TABLE -->标记后插入统计数据
+                    end_table_marker = "<!-- END_COMMIT_TABLE -->"
+                    end_table_index = new_content.find(end_table_marker)
+                    if end_table_index != -1:
+                        insert_position = end_table_index + \
+                            len(end_table_marker)
+                        new_content = new_content[:insert_position] + \
+                            "\n" + stats_content + \
+                            new_content[insert_position:]
+                    else:
+                        logging.warning(
+                            "<!-- END_COMMIT_TABLE --> marker not found. Appending stats to the end.")
+                        new_content += "\n" + stats_content
         with open(README_FILE, 'w', encoding='utf-8') as file:
             file.write(new_content)
         logging.info("README.md has been successfully updated.")
