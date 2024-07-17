@@ -80,7 +80,7 @@ def extract_content_between_markers(file_content):
     start_index = file_content.find(Content_START_MARKER)
     end_index = file_content.find(Content_END_MARKER)
     if start_index == -1 or end_index == -1:
-        logging.warning("EICL1st markers not found in the file")
+        logging.warning("Content_START_MARKER markers not found in the file")
         return ""
     return file_content[start_index + len(Content_START_MARKER):end_index].strip()
 
@@ -92,7 +92,9 @@ def find_date_in_content(content, local_date):
         r'###\s*' +
         local_date.strftime("%m.%d").lstrip('0').replace('.0', '.'),
         r'###\s*' + local_date.strftime("%Y/%m/%d"),
-        r'###\s*' + local_date.strftime("%m/%d").lstrip('0').replace('/0', '/')
+        r'###\s*' +
+        local_date.strftime("%m/%d").lstrip('0').replace('/0', '/'),
+        r'###\s*' + local_date.strftime("%m.%d").zfill(5)
     ]
     combined_pattern = '|'.join(date_patterns)
     return re.search(combined_pattern, content)
@@ -217,20 +219,6 @@ def update_readme(content):
         existing_users = set()
         table_rows = content[start_index +
                              len(TABLE_START_MARKER):end_index].strip().split('\n')[2:]
-
-        # for row in table_rows:
-        #     match = re.match(r'\|\s*([^|]+)\s*\|', row)
-        #     if match:
-        #         display_name = match.group(1).strip()
-        #         existing_users.add(display_name)
-        #         new_table.append(generate_user_row(display_name))
-        #     else:
-        #         logging.warning(f"Skipping invalid row: {row}")
-
-        # new_users = set(get_all_user_files()) - existing_users
-        # for user in new_users:
-        #     new_table.append(generate_user_row(user))
-        #     logging.info(f"Added new user: {user}")
 
         for row in table_rows:
             match = re.match(r'\|\s*([^|]+)\s*\|', row)
