@@ -352,4 +352,39 @@ https://www.bilibili.com/video/BV1U7411a7xG/?p=21&spm_id_from=pageDriver&vd_sour
 
 ### 7.10
 sdf74a6s4df65a4sdf65a4sd6f54as6df4as6d4f
+### 7.11
+D23
+
+library book returned after 50 years
+A library book was finally returned after being overdue for 50 years, surprising the library staff.
+Fix
+
+A library book was finally returned after being overdue for 50 years, astonishing the library staff.
+
+### 7.12
+D24
+
+bear spotted shopping in a grocery store
+A bear was spotted wandering the aisles of a grocery store yesterday, leaving shoppers in disbelief.
+Fix
+
+Yesterday, a bear was spotted wandering the aisles of a grocery store, leaving shoppers in disbelief.
+
+### 7.13
+D25
+
+mysterious object found on the beach
+A mysterious object washed up on the beach last week, sparking curiosity among the locals.
+Fix
+
+Last week, a mysterious object washed up on the beach, sparking curiosity among the locals.
+
+### 7.14
+D26
+
+world's oldest tree discovered
+Scientists have discovered what is believed to be the world's oldest tree in a remote area, challenging previous records.
+Fix
+
+Scientists have discovered what is believed to be the world's oldest tree in a remote area, challenging previous records.
 <!-- Content_END -->
