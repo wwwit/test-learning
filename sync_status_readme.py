@@ -1,5 +1,6 @@
 import os
 import re
+import requests
 from datetime import datetime, timedelta
 import pytz
 import logging
@@ -17,6 +18,8 @@ Content_START_MARKER = "<!-- Content_START -->"
 Content_END_MARKER = "<!-- Content_END -->"
 TABLE_START_MARKER = "<!-- START_COMMIT_TABLE -->"
 TABLE_END_MARKER = "<!-- END_COMMIT_TABLE -->"
+GITHUB_REPOSITORY_OWNER = os.environ.get('GITHUB_REPOSITORY_OWNER', 'wwwit')
+GITHUB_REPOSITORY = os.environ.get('GITHUB_REPOSITORY', 'test-learning')
 
 # Configure logging
 logging.basicConfig(level=logging.INFO,
@@ -287,6 +290,21 @@ def generate_user_row(user):
     return new_row + '\n'
 
 
+def get_fork_count():
+    repo_owner = GITHUB_REPOSITORY_OWNER
+    repo_name = GITHUB_REPOSITORY
+    api_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}"
+
+    try:
+        response = requests.get(api_url)
+        response.raise_for_status()
+        repo_data = response.json()
+        return repo_data['forks_count']
+    except requests.RequestException as e:
+        logging.error(f"Error fetching fork count: {e}")
+        return None
+
+
 def calculate_statistics(content):
     start_index = content.find(TABLE_START_MARKER)
     end_index = content.find(TABLE_END_MARKER)
@@ -303,12 +321,14 @@ def calculate_statistics(content):
     completed_participants = total_participants - eliminated_participants
     elimination_rate = (eliminated_participants /
                         total_participants) * 100 if total_participants > 0 else 0
+    fork_count = get_fork_count()
 
     return {
         'total_participants': total_participants,
         'completed_participants': completed_participants,
         'eliminated_participants': eliminated_participants,
-        'elimination_rate': elimination_rate
+        'elimination_rate': elimination_rate,
+        'fork_count': fork_count
     }
 
 
@@ -336,6 +356,7 @@ def main():
                 stats_content += f"- 完成人数: {stats['completed_participants']}\n"
                 stats_content += f"- 淘汰人数: {stats['eliminated_participants']}\n"
                 stats_content += f"- 淘汰率: {stats['elimination_rate']:.2f}%\n"
+                stats_content += f"- Fork人数: {stats['fork_count']}\n"
             # 将统计数据添加到文件末尾
             # 在<!-- END_COMMIT_TABLE -->标记后插入统计数据
                 # 检查是否已存在统计数据
