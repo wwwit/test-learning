@@ -1,4 +1,5 @@
 import os
+import subprocess
 import re
 import requests
 from datetime import datetime, timedelta
@@ -18,8 +19,8 @@ Content_START_MARKER = "<!-- Content_START -->"
 Content_END_MARKER = "<!-- Content_END -->"
 TABLE_START_MARKER = "<!-- START_COMMIT_TABLE -->"
 TABLE_END_MARKER = "<!-- END_COMMIT_TABLE -->"
-GITHUB_REPOSITORY_OWNER = os.environ.get('LXDAO_REPOSITORY_OWNER', 'wwwit')
-GITHUB_REPOSITORY = os.environ.get('LXDAO_REPOSITORY', 'test-learning')
+GITHUB_REPOSITORY_OWNER = os.environ.get('GITHUB_REPOSITORY_OWNER')
+GITHUB_REPOSITORY = os.environ.get('GITHUB_REPOSITORY')
 
 # Configure logging
 logging.basicConfig(level=logging.INFO,
@@ -290,10 +291,37 @@ def generate_user_row(user):
     return new_row + '\n'
 
 
+def get_repo_info():
+    if 'GITHUB_REPOSITORY' in os.environ:
+        # 在GitHub Actions环境中
+        full_repo = os.environ['GITHUB_REPOSITORY']
+        owner, repo = full_repo.split('/')
+    else:
+        # 在本地环境中
+        try:
+            remote_url = subprocess.check_output(
+                ['git', 'config', '--get', 'remote.origin.url']).decode('utf-8').strip()
+            if remote_url.startswith('https://github.com/'):
+                owner, repo = remote_url.split('/')[-2:]
+            elif remote_url.startswith('git@github.com:'):
+                owner, repo = remote_url.split(':')[-1].split('/')
+            else:
+                raise ValueError("Unsupported remote URL format")
+            repo = re.sub(r'\.git$', '', repo)
+        except subprocess.CalledProcessError:
+            logging.error(
+                "Failed to get repository information from git config")
+            return None, None
+    return owner, repo
+
+
 def get_fork_count():
-    repo_owner = GITHUB_REPOSITORY_OWNER
-    repo_name = GITHUB_REPOSITORY
-    api_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}"
+    owner, repo = get_repo_info()
+    if not owner or not repo:
+        logging.error("Failed to get repository information")
+        return None
+
+    api_url = f"https://api.github.com/repos/{owner}/{repo}"
 
     try:
         response = requests.get(api_url)
@@ -336,6 +364,8 @@ def main():
     try:
         print_variables(
             'START_DATE', 'END_DATE', 'DEFAULT_TIMEZONE',
+            GITHUB_REPOSITORY_OWNER=GITHUB_REPOSITORY,
+            GITHUB_REPOSITORY=GITHUB_REPOSITORY,
             FILE_SUFFIX=FILE_SUFFIX,
             README_FILE=README_FILE,
             FIELD_NAME=FIELD_NAME,
