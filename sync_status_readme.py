@@ -18,8 +18,8 @@ Content_START_MARKER = "<!-- Content_START -->"
 Content_END_MARKER = "<!-- Content_END -->"
 TABLE_START_MARKER = "<!-- START_COMMIT_TABLE -->"
 TABLE_END_MARKER = "<!-- END_COMMIT_TABLE -->"
-GITHUB_REPOSITORY_OWNER = os.environ.get('GITHUB_REPOSITORY_OWNER', 'wwwit')
-GITHUB_REPOSITORY = os.environ.get('GITHUB_REPOSITORY', 'test-learning')
+GITHUB_REPOSITORY_OWNER = os.environ.get('LXDAO_REPOSITORY_OWNER', 'wwwit')
+GITHUB_REPOSITORY = os.environ.get('LXDAO_REPOSITORY', 'test-learning')
 
 # Configure logging
 logging.basicConfig(level=logging.INFO,
