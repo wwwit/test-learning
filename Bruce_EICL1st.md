@@ -332,6 +332,10 @@ A 67-year-old grandpa has been found alive after being stuck for 6 days at the b
 Note
 
 - ravine a deep narrow valley with steep sides
+### 7.6
+asdfasdfasdfasdf
+### 7.7
+asdfasdfasdfasdfasdf
 ### 7.8
 
 D20
