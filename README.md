@@ -68,8 +68,7 @@ LXDAO Host 的英语残酷共学第 1 期将着重加强**听和说**的训练�
 | Bruce | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 <!-- END_COMMIT_TABLE -->
 
-
-
+<!-- STATISTICALDATA_START -->
 
 
 ## 统计数据
@@ -80,3 +79,7 @@ LXDAO Host 的英语残酷共学第 1 期将着重加强**听和说**的训练�
 - 淘汰人数: 3
 - 淘汰率: 42.86%
 - Fork人数: 4
+<!-- STATISTICALDATA_END -->
+
+
+![ICL](img/ICL.png)
