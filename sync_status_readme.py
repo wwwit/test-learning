@@ -8,9 +8,9 @@ import logging
 
 # Constants
 START_DATE = datetime.fromisoformat(os.environ.get(
-    'START_DATE', '2024-06-24T00:00:00+00:00')).replace(tzinfo=pytz.UTC)
+    'START_DATE', '2024-10-08T00:00:00+00:00')).replace(tzinfo=pytz.UTC)
 END_DATE = datetime.fromisoformat(os.environ.get(
-    'END_DATE', '2024-07-14T23:59:59+00:00')).replace(tzinfo=pytz.UTC)
+    'END_DATE', '2024-10-28T23:59:59+00:00')).replace(tzinfo=pytz.UTC)
 DEFAULT_TIMEZONE = 'Asia/Shanghai'
 FILE_SUFFIX = os.environ.get('FILE_SUFFIX', '.md')
 README_FILE = 'README.md'
@@ -89,6 +89,28 @@ def extract_content_between_markers(file_content):
     return file_content[start_index + len(Content_START_MARKER):end_index].strip()
 
 
+# def extract_content_between_markers(file_content):
+#     first_start = file_content.find(Content_START_MARKER)
+#     if first_start == -1:
+#         logging.warning("Content_START_MARKER not found in the file")
+#         return ""
+
+#     # 从第一个标记之后开始搜索第二个标记对
+#     second_start = file_content.find(
+#         Content_START_MARKER, first_start + len(Content_START_MARKER))
+#     if second_start == -1:
+#         logging.warning("Second Content_START_MARKER not found in the file")
+#         return ""
+
+#     end_index = file_content.find(Content_END_MARKER, second_start)
+#     if end_index == -1:
+#         logging.warning(
+#             "Content_END_MARKER not found after second start marker")
+#         return ""
+
+#     return file_content[second_start + len(Content_START_MARKER):end_index].strip()
+
+
 def find_date_in_content(content, local_date):
     date_patterns = [
         r'###\s*' + local_date.strftime("%Y.%m.%d"),
@@ -98,8 +120,10 @@ def find_date_in_content(content, local_date):
         r'###\s*' + local_date.strftime("%Y/%m/%d"),
         r'###\s*' +
         local_date.strftime("%m/%d").lstrip('0').replace('/0', '/'),
-        r'###\s*' + local_date.strftime("%m.%d").zfill(5)
+        r'###\s*' + local_date.strftime("%m.%d").zfill(5),
+        r'###\s*' + local_date.strftime("%Y.%m.%d")  # 新增：完整年月日格式
     ]
+
     combined_pattern = '|'.join(date_patterns)
     return re.search(combined_pattern, content)
 
@@ -200,7 +224,7 @@ def check_weekly_status(user_status, date, user_tz):
 def get_all_user_files():
     exclude_prefixes = ('template', 'readme')
     return [f[:-len(FILE_SUFFIX)] for f in os.listdir('.')
-            if f.lower().endswith(FILE_SUFFIX.lower()) 
+            if f.lower().endswith(FILE_SUFFIX.lower())
             and not f.lower().startswith(exclude_prefixes)]
 
 

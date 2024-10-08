@@ -21,11 +21,11 @@
 
 ## Notes
 <!-- Content_START --> 
-### 2024.6.24
-xxx
+### 2024.10.08
+xxxdfasdfafgasfgadfadf
 
-### 2024.6.25
-xxx
+### 2024.10.09
+xxxasdfasdfasdfads
 
 ### 2024.6.26
 xxx
