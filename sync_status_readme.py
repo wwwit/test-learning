@@ -228,6 +228,10 @@ def get_all_user_files():
             and not f.lower().startswith(exclude_prefixes)]
 
 
+def file_exists(user):
+    return os.path.exists(f"{user}{FILE_SUFFIX}")
+
+
 def update_readme(content):
     try:
         start_index = content.find(TABLE_START_MARKER)
@@ -239,9 +243,8 @@ def update_readme(content):
 
         new_table = [
             f'{TABLE_START_MARKER}\n',
-            f'| {FIELD_NAME} | ' +
-            ' | '.join(date.strftime("%m.%d").lstrip('0')
-                       for date in get_date_range()) + ' |\n',
+            f'| {FIELD_NAME} | ' + ' | '.join(date.strftime("%m.%d").lstrip('0')
+                                              for date in get_date_range()) + ' |\n',
             '| ------------- | ' +
             ' | '.join(['----' for _ in get_date_range()]) + ' |\n'
         ]
@@ -249,29 +252,31 @@ def update_readme(content):
         existing_users = set()
         table_rows = content[start_index +
                              len(TABLE_START_MARKER):end_index].strip().split('\n')[2:]
-
         for row in table_rows:
             match = re.match(r'\|\s*([^|]+)\s*\|', row)
             if match:
                 display_name = match.group(1).strip()
-                if display_name:  # 检查 display_name 是否为非空
+                if display_name and file_exists(display_name):
                     existing_users.add(display_name)
                     new_table.append(generate_user_row(display_name))
                 else:
                     logging.warning(
-                        f"Skipping empty display name in row: {row}")
+                        f"Removing user {display_name} due to missing file")
             else:
                 logging.warning(f"Skipping invalid row: {row}")
 
         new_users = set(get_all_user_files()) - existing_users
         for user in new_users:
-            if user.strip():  # 确保用户名不是空的或只包含空格
+            if user.strip() and file_exists(user):
                 new_table.append(generate_user_row(user))
                 logging.info(f"Added new user: {user}")
             else:
-                logging.warning(f"Skipping empty user: '{user}'")
+                logging.warning(
+                    f"Skipping user '{user}' due to empty name or missing file")
+
         new_table.append(f'{TABLE_END_MARKER}\n')
         return content[:start_index] + ''.join(new_table) + content[end_index + len(TABLE_END_MARKER):]
+
     except Exception as e:
         logging.error(f"Error in update_readme: {str(e)}")
         return content
