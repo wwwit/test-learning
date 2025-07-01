@@ -329,6 +329,7 @@ LXDAO Host 的英语残酷共学第 1 期将着重加强**听和说**的训练�
 
 
 
+
 <!-- STATISTICALDATA_START -->
 
 
@@ -340,7 +341,7 @@ LXDAO Host 的英语残酷共学第 1 期将着重加强**听和说**的训练�
 - 全勤用户: 
 - 淘汰人数: 1
 - 淘汰率: 100.00%
-- Fork人数: None
+- Fork人数: 4
 <!-- STATISTICALDATA_END -->
 
 
